@@ -55,9 +55,10 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 	public function submitButton($content = 'Submit', $options = ['class' => 'btn btn-primary']) {
 
-		$environmentModule = Yii::$app->getModule("environment");
+		$htmlClass = Yii::$app->hasModule("environment") ? 
+			\matacms\environment\helpers\Html::class : \yii\helpers\Html::class;
 
-		return $environmentModule ? \matacms\environment\helpers\Html::submitButton($content, $options) : yii\helpers\Html::submitButton($content, $options);
+		return $htmlClass::submitButton($content, $options);
 	}
 
 }
