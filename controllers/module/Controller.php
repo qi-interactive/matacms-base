@@ -82,8 +82,16 @@ abstract class Controller extends AuthenticatedController {
 
 		$view =  $view ?: $this->action->id;
 		$moduleViewFile = Yii::$app->controller->module->getViewPath() . "/" . $this->id . "/" . $view;
-		return file_exists($moduleViewFile . ".php") ? "@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) : "@matacms/views/module/" . $view;
 
+		if (file_exists($moduleViewFile . ".php")) {
+			$view = strpos($moduleViewFile, "vendor") > -1 ? 
+			"@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) : 
+			"@" .  substr($moduleViewFile, stripos($moduleViewFile, "mata-cms"));
+		} else {
+			$view =  "@matacms/views/module/" . $view;
+		}
+
+		return $view;
 	}
 
 	public function actionIndex() {
