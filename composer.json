@@ -27,7 +27,7 @@
         "harrytang/yii2-fineuploader": "*",
         "zhuravljov/yii2-datetime-widgets": "*",
         "mdmsoft/yii2-admin": "~1.0",
-        "matacms/matacms-environment": "*"
+	"matacms/matacms-environment": "dev-development"
     },
     "config": {
         "process-timeout": 1800
