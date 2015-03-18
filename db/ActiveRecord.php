@@ -8,6 +8,7 @@ use yii\base\InvalidConfigException;
 class ActiveRecord extends \mata\db\ActiveRecord {
 
 	private $attributeLabels;
+    
 
     /**
      * This needs to be defined in the base class, otherwise __get will not access the property.
