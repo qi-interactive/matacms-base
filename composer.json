@@ -17,7 +17,7 @@
         "mata/mata-media": "*",
         "mata/mata-category": "*",
         "mata/mata-tag": "*",
-        "qi-interactive/yii2-imperavi-redactor": "*",
+        "asofter/yii2-imperavi-redactor": "*",
         "matacms/matacms-settings": "*",
         "matacms/matacms-cache": "*",
         "matacms/matacms-content-block": "*",
