@@ -75,7 +75,7 @@ class ActiveField extends \yii\widgets\ActiveField {
   }
 
   public function media($options = []) {
-    $this->parts['{input}'] = \mata\widgets\fineuploader\Fineuploader::widget([
+    $this->parts['{input}'] = \mata\widgets\fineuploader\FineUploader::widget([
       'model' => $this->model,
       'attribute' => $this->attribute,
       'options' => $options
@@ -104,6 +104,21 @@ class ActiveField extends \yii\widgets\ActiveField {
       ], $options);
 
     $this->parts['{input}'] = Selectize::widget($options);
+    return $this;
+  }
+
+  public function uriGenerateFromField($fieldName, $options = []) {
+    $options = ArrayHelper::merge([
+      'class' => 'form-control',
+      ], $options);
+    
+    $this->parts['{input}'] = \matacms\widgets\UriGenerator::widget([
+      'model' => $this->model,
+      'attribute' => $this->attribute,
+      'options' => $options,
+      'basedOnAttribute' => $fieldName
+      ]);
+
     return $this;
   }
 }
