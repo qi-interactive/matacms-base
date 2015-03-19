@@ -15,25 +15,25 @@ class Html extends \yii\helpers\Html {
 
 	public static function activeCategoryField($model, $options = []) {
 
-		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Id', 'Name');
-		$value = CategoryItem::find()->forItem($model)->one();
+		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Name', 'Name');
+		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()])->all(), 'category.Name');
 
 		if ($value != null)
-			$options["value"] = $value->CategoryId;
+			$options["value"] = $value;
 
 		$options["name"] = CategoryItem::REQ_PARAM_CATEGORY_ID;
-		
+
 		$options = ArrayHelper::merge([
 			'items' => $items,
-			'clientOptions' => ['maxItems' => 1]
+			'options' => ['multiple'=>true],
+			'clientOptions' => [
+			'plugins' => ["remove_button", "drag_drop", "restore_on_backspace"],
+			'create' => false,
+			'persist' => false,
+			]
 			], $options);
 
-		$retVal = Selectize::widget($options);
-
-		$grouping = isset($options["grouping"]) ?: Category::generateGroupingFromObject($model);
-
-		$retVal .= Html::hiddenInput(CategoryItem::REQ_PARAM_CATEGORY_GROUPING, $grouping);
-		return $retVal;
+		return Selectize::widget($options);
 	}
 
 	public static function activeTagField($model, $options = []) {
@@ -43,7 +43,6 @@ class Html extends \yii\helpers\Html {
 
 		if ($value != null)
 			$options["value"] = $value;
-
 
 		$options["name"] = TagItem::REQ_PARAM_TAG_ID;
 
