@@ -41,7 +41,6 @@ abstract class Controller extends AuthenticatedController {
 
 	public function actionCreate() {
 		$model = $this->getModel();
-		$model = new $model;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$this->trigger(self::EVENT_MODEL_CREATED, new MessageEvent($model));
