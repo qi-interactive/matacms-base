@@ -8,8 +8,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "mata/mata-framework": "dev-development",
         "mata/mata-user": "*",
+        "mata/mata-framework": "dev-development",
         "mata/mata-key-value": "dev-development",
         "mata/mata-module-menu" : "*",
         "mata/mata-ar-history": "dev-development",
