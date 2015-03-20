@@ -107,12 +107,12 @@ class ActiveField extends \yii\widgets\ActiveField {
     return $this;
   }
 
-  public function uriGenerateFromField($fieldName, $options = []) {
+  public function slug($fieldName, $options = []) {
     $options = ArrayHelper::merge([
       'class' => 'form-control',
       ], $options);
     
-    $this->parts['{input}'] = \matacms\widgets\UriGenerator::widget([
+    $this->parts['{input}'] = \matacms\widgets\Slug::widget([
       'model' => $this->model,
       'attribute' => $this->attribute,
       'options' => $options,

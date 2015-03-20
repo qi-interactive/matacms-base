@@ -5,7 +5,7 @@ namespace matacms\widgets;
 use Yii;
 use yii\helpers\Html;
 
-class UriGenerator extends \yii\widgets\InputWidget
+class Slug extends \yii\widgets\InputWidget
 {
 	public $options = [];
 	
