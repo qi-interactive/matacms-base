@@ -47,7 +47,7 @@ abstract class Controller extends AuthenticatedController {
 
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
 		} else {
-			return $this->render($this->findView(), [
+			return $this->render("index", [
 				'model' => $model,
 				]);
 		}
@@ -61,7 +61,7 @@ abstract class Controller extends AuthenticatedController {
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
 		} else {
 
-			return $this->render($this->findView(), [
+			return $this->render("update", [
 				'model' => $model,
 				]);
 		}
@@ -77,9 +77,19 @@ abstract class Controller extends AuthenticatedController {
 		return $this->redirect(['index']);
 	}
 
-	public function findView($view = null) {
+	public function render($view, $params = []) {
 
-		$view =  $view ?: $this->action->id;
+		try {
+			return parent::render($view, $params);
+		} catch (\yii\base\InvalidParamException $e) {
+			// view not found using default Yii routing
+			return $this->renderMataCmsView($view, $params);
+		}
+	}
+
+
+	private function renderMataCMSView($view, $params) {
+
 		$moduleViewFile = Yii::$app->controller->module->getViewPath() . "/" . $this->id . "/" . $view;
 
 		if (file_exists($moduleViewFile . ".php")) {
@@ -90,7 +100,7 @@ abstract class Controller extends AuthenticatedController {
 			$view =  "@matacms/views/module/" . $view;
 		}
 
-		return $view;
+		return parent::render($view, $params);
 	}
 
 	public function actionIndex() {
@@ -99,7 +109,7 @@ abstract class Controller extends AuthenticatedController {
 		$searchModel = new $searchModel();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		return $this->render($this->findView(), [
+		return $this->render("index", [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			]);
