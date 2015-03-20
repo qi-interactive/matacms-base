@@ -47,15 +47,21 @@ abstract class Controller extends AuthenticatedController {
 
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
 		} else {
-			return $this->render("index", [
+			return $this->render("create", [
 				'model' => $model,
 				]);
 		}
 	}
 
 	public function actionUpdate($id) {
+
+		// $locator = new \yii\di\ServiceLocator;
+		// $locator->set('view', new \matacms\web\View);
+		// $this->setView($locator->get("view"));
+
 		$model = $this->findModel($id);
 
+	
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$this->trigger(self::EVENT_MODEL_UPDATED, new MessageEvent($model));
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
@@ -70,10 +76,9 @@ abstract class Controller extends AuthenticatedController {
 	public function actionDelete($id) {
 
 		$model = $this->findModel($id);
-		$label = $model->getLabel();
+		$this->trigger(self::EVENT_MODEL_DELETED, new MessageEvent($model));
 		$model->delete();
 
-		$this->trigger(self::EVENT_MODEL_DELETED, new MessageEvent($label));
 		return $this->redirect(['index']);
 	}
 

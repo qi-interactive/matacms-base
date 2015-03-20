@@ -13,8 +13,6 @@ class View extends \yii\web\View {
 
 		$particularsView = "@matacms/particulars/" . substr($moduleViewFile, stripos($moduleViewFile, "vendor") + 7);
 
-
-
 		try {
 			return parent::render($particularsView, $params, $context);
 		} catch (\yii\base\InvalidParamException $e) {
