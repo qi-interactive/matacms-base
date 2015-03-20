@@ -24,6 +24,7 @@
         "matacms/matacms-simple-theme": "dev-development",
         "matacms/matacms-post": "dev-master",
         "matacms/matacms-carousel": "dev-development",
+        "matacms/matacms-person":"dev-development",
         "yiidoc/yii2-selectize": "dev-master",
         "harrytang/yii2-fineuploader": "*",
         "zhuravljov/yii2-datetime-widgets": "dev-master",
