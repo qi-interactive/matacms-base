@@ -65,7 +65,7 @@ class Html extends \yii\helpers\Html {
 			'model' => $model,
 			'attribute' => $attribute,
 			'options' => $options,
-			'uploadSuccessEndpoint' => "/mata-cms/media/s3/upload-successful?documentId=" . urlencode($model->getDocumentId() . "::" . $attribute)
+			'uploadSuccessEndpoint' => "/mata-cms/media/s3/upload-successful?documentId=" . urlencode($model->getDocumentId($attribute))
 			]);
 
 	}
