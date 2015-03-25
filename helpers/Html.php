@@ -38,7 +38,8 @@ class Html extends \yii\helpers\Html {
 
 	public static function activeTagField($model, $options = []) {
 
-		$items = ArrayHelper::map(Tag::find()->getActiveTags()->orderBy('Name ASC')->all(), 'Name', 'Name');
+		// $items = ArrayHelper::map(Tag::find()->getActiveTags()->orderBy('Name ASC')->all(), 'Name', 'Name');
+		$items = ArrayHelper::map(Tag::find()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(TagItem::find()->with("tag")->where(["DocumentId" => $model->getDocumentId()])->all(), 'tag.Name');
 
 		if ($value != null)
