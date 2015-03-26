@@ -8,7 +8,7 @@ use mata\category\models\CategoryItem;
 use mata\tag\models\Tag;
 use mata\tag\models\TagItem;
 use yii\selectize\Selectize;
-use \mata\widgets\fineuploader\Fineuploader;
+use \mata\widgets\fineuploader\FineUploader;
 use mata\media\models\Media;
 
 class Html extends \yii\helpers\Html {
