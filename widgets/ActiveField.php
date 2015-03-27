@@ -131,4 +131,22 @@ class ActiveField extends \yii\widgets\ActiveField {
 
         return $this;
     }
+
+    public function dropDownList($items, $options = [])
+    {
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' single-choice-dropdown';
+        }
+        $options = ArrayHelper::merge([
+            'items' => $items,
+            'options' => ['multiple'=>false],
+            'clientOptions' => [
+            'create' => false,
+            'persist' => false,
+            ]
+            ], $options);
+
+        $this->parts['{input}'] = Selectize::widget($options);
+        return $this;
+    }
 }
