@@ -28,7 +28,7 @@
         "yiidoc/yii2-selectize": "dev-master",
         "harrytang/yii2-fineuploader": "*",
         "zhuravljov/yii2-datetime-widgets": "dev-master",
-        "mdmsoft/yii2-admin": "~1.0",
+        "mata/mata-rbac": "dev-development",
         "matacms/matacms-environment": "dev-development"
     },
     "config": {
