@@ -108,7 +108,7 @@ class ActiveField extends \yii\widgets\ActiveField {
     {
         $options = ArrayHelper::merge([
             'items' => $items,
-            'options' => ['multiple'=>true],
+            'options' => ['multiple' => true],
             'clientOptions' => []
         ], $options);
 
@@ -134,12 +134,15 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function dropDownList($items, $options = [])
     {
-        if(isset($this->options['class'])) {
-            $this->options['class'] .= ' single-choice-dropdown';
+        $prompt = 'Choose ...';
+        if(isset($options['prompt'])) {
+            $prompt = $options['prompt'];
+            unset($options['prompt']);
         }
+
         $options = ArrayHelper::merge([
             'items' => $items,
-            'options' => ['multiple'=>false],
+            'options' => ['multiple'=>false, 'prompt' => $prompt],
             'clientOptions' => [
             'create' => false,
             'persist' => false,
