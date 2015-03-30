@@ -140,6 +140,14 @@ class ActiveField extends \yii\widgets\ActiveField {
             unset($options['prompt']);
         }
 
+        if(isset($this->model)) {
+            $options['model'] = $this->model;
+        }
+
+        if(isset($this->attribute)) {
+            $options['attribute'] = $this->attribute;
+        }
+
         $options = ArrayHelper::merge([
             'items' => $items,
             'options' => ['multiple'=>false, 'prompt' => $prompt],
