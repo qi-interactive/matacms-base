@@ -61,7 +61,6 @@ abstract class Controller extends AuthenticatedController {
 
 		$model = $this->findModel($id);
 
-	
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$this->trigger(self::EVENT_MODEL_UPDATED, new MessageEvent($model));
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
