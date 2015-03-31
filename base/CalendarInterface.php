@@ -4,5 +4,8 @@ namespace matacms\base;
 
 interface CalendarInterface
 {
-    public function getCalendarDate();
+    
+    public static function getEventDateAttribute();
+
+    public function getEventDate();
 }
