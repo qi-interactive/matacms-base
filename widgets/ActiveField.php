@@ -34,7 +34,10 @@ class ActiveField extends \yii\widgets\ActiveField {
         $this->parts['{input}'] = \mata\imperavi\Widget::widget([
             'model' => $this->model,
             'attribute' => $this->attribute,
-            'options' => $options
+            'options' => $options,
+            'htmlOptions' => [
+                'id' => \yii\helpers\Html::getInputId($this->model, $this->attribute)
+            ]
         ]);
 
         return $this;

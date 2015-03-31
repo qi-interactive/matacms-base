@@ -20,6 +20,11 @@ abstract class SimpleClient {
 		return $model;
 	}
 
+	public function find() {
+		$model = $this->getModel();
+		return $model->find();
+	}
+
 	public function findModel($id) {
 
 		$model = $this->getModel();
