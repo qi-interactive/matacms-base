@@ -3,7 +3,9 @@
 namespace matacms\db;
 
 use mata\arhistory\behaviors\HistoryBehavior;
+use matacms\environment\behaviors\EnvironmentBehavior;
 use yii\base\InvalidConfigException;
+use yii\helpers\Inflector;
 
 class ActiveRecord extends \mata\db\ActiveRecord {
 
@@ -17,7 +19,8 @@ class ActiveRecord extends \mata\db\ActiveRecord {
 
 	public function behaviors() {
 		return [
-			HistoryBehavior::className()
+			HistoryBehavior::className(),
+            EnvironmentBehavior::className()
 		];
 	}
 
@@ -31,6 +34,11 @@ class ActiveRecord extends \mata\db\ActiveRecord {
 
 		return $this->getPrimaryKey();
 	}
+
+    public function getModelLabel() {
+        $reflection = new \ReflectionClass($this);
+        return Inflector::camel2words($reflection->getShortName());
+    }
 
 	public function getTableName() {
 		return static::tableName();

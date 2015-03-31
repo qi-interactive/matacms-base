@@ -20,9 +20,9 @@ class NotificationFilter extends Behavior {
 	 */
 	public function beforeAction($event) {
 		
-		$this->observe($event, Controller::EVENT_MODEL_CREATED, "%s has been <strong>created</strong>.");
-		$this->observe($event, Controller::EVENT_MODEL_UPDATED, "%s has been <strong>updated</strong>.");
-		$this->observe($event, Controller::EVENT_MODEL_DELETED, "%s has been <strong>deleted</strong>.");
+		$this->observe($event, Controller::EVENT_MODEL_CREATED, "%s <strong>%s</strong> has been <strong>created</strong>.");
+		$this->observe($event, Controller::EVENT_MODEL_UPDATED, "%s <strong>%s</strong> has been <strong>updated</strong>.");
+		$this->observe($event, Controller::EVENT_MODEL_DELETED, "%s <strong>%s</strong> has been <strong>deleted</strong>.");
 
 		Event::on(View::className(), View::EVENT_BEGIN_BODY, function ($event) {
 			foreach(\Yii::$app->session->getAllFlashes(true) as $key => $message) {
@@ -36,7 +36,7 @@ class NotificationFilter extends Behavior {
 
 	private function observe($actionEvent, $eventToObserve, $messageFormat) {
 		$actionEvent->action->controller->on($eventToObserve, function(\matacms\base\MessageEvent $event) {
-			\Yii::$app->getSession()->setFlash($event->getLevel(), sprintf($event->data, $event->getMessage()->getLabel()));
+			\Yii::$app->getSession()->setFlash($event->getLevel(), sprintf($event->data, $event->getMessage()->getModelLabel(), $event->getMessage()->getLabel()));
 		}, $messageFormat);
 	}
 }
