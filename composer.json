@@ -17,7 +17,7 @@
         "mata/mata-media": "dev-master",
         "mata/mata-category": "dev-master",
         "mata/mata-tag": "dev-master",
-        "asofter/yii2-imperavi-redactor": "dev-master",
+        "mata/mata-imperavi-redactor": "dev-development",
         "matacms/matacms-settings": "dev-master",
         "matacms/matacms-cache": "dev-development",
         "matacms/matacms-content-block": "dev-master",
