@@ -86,7 +86,7 @@ class ActiveField extends \yii\widgets\ActiveField {
             'attribute' => $this->attribute,
             'options' => $options,
             'events' => [
-                'complete' => "$(this).closest('form').append('<input type=\"hidden\" name=\"Media[]\" value=\"' + uploadSuccessResponse.DocumentId + '\">');"
+                'complete' => "$(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId);"
             ]
         ]);
 
