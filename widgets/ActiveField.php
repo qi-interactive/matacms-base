@@ -31,7 +31,7 @@ class ActiveField extends \yii\widgets\ActiveField {
         ], $options);
 
         $this->adjustLabelFor($options);
-        $this->parts['{input}'] = \yii\imperavi\Widget::widget([
+        $this->parts['{input}'] = \mata\imperavi\Widget::widget([
             'model' => $this->model,
             'attribute' => $this->attribute,
             'options' => $options
