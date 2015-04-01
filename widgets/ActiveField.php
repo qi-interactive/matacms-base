@@ -28,7 +28,7 @@ class ActiveField extends \yii\widgets\ActiveField {
 
         $options = array_merge([
             "s3" => "/mata-cms/media/redactor/s3",
-        ], $options);
+            ], $options);
 
         $this->adjustLabelFor($options);
         $this->parts['{input}'] = \mata\imperavi\Widget::widget([
@@ -36,9 +36,9 @@ class ActiveField extends \yii\widgets\ActiveField {
             'attribute' => $this->attribute,
             'options' => $options,
             'htmlOptions' => [
-                'id' => \yii\helpers\Html::getInputId($this->model, $this->attribute)
+            'id' => \yii\helpers\Html::getInputId($this->model, $this->attribute)
             ]
-        ]);
+            ]);
 
         return $this;
     }
@@ -84,14 +84,20 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function media($options = []) 
     {
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' half-max-width-item';
+        } else {
+            $this->options['class'] = 'half-max-width-item';
+        }
+        
         $this->parts['{input}'] = \mata\widgets\fineuploader\FineUploader::widget([
             'model' => $this->model,
             'attribute' => $this->attribute,
             'options' => $options,
             'events' => [
-                'complete' => "$(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId);"
+            'complete' => "$(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId);"
             ]
-        ]);
+            ]);
 
         return $this;
     }
@@ -101,19 +107,23 @@ class ActiveField extends \yii\widgets\ActiveField {
         $options = ArrayHelper::merge([
             'items' => $items,
             'clientOptions' => ['maxItems' => 1]
-        ], $options);
+            ], $options);
 
         $this->parts['{input}'] = Selectize::widget($options);
-            return $this;
+        return $this;
     }
 
     public function multiselect($items, $options = [])
     {
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' multi-choice-dropdown half-max-width-item';
+        }
+
         $options = ArrayHelper::merge([
             'items' => $items,
             'options' => ['multiple' => true],
             'clientOptions' => []
-        ], $options);
+            ], $options);
 
         $this->parts['{input}'] = Selectize::widget($options);
         return $this;
@@ -121,16 +131,22 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function slug($fieldName, $options = []) 
     {
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' half-max-width-item';
+        } else {
+            $this->options['class'] = 'half-max-width-item';
+        }
+
         $options = ArrayHelper::merge([
             'class' => 'form-control',
-        ], $options);
-    
+            ], $options);
+
         $this->parts['{input}'] = \matacms\widgets\Slug::widget([
             'model' => $this->model,
             'attribute' => $this->attribute,
             'options' => $options,
             'basedOnAttribute' => $fieldName
-        ]);
+            ]);
 
         return $this;
     }
@@ -151,6 +167,12 @@ class ActiveField extends \yii\widgets\ActiveField {
             $options['attribute'] = $this->attribute;
         }
 
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' single-choice-dropdown half-max-width-item';
+        } else {
+            $this->options['class'] = 'single-choice-dropdown half-max-width-item';
+        }
+
         $options = ArrayHelper::merge([
             'items' => $items,
             'options' => ['multiple'=>false, 'prompt' => $prompt],
@@ -164,3 +186,5 @@ class ActiveField extends \yii\widgets\ActiveField {
         return $this;
     }
 }
+
+
