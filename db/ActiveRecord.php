@@ -6,65 +6,57 @@ use mata\arhistory\behaviors\HistoryBehavior;
 use matacms\environment\behaviors\EnvironmentBehavior;
 use yii\base\InvalidConfigException;
 use yii\helpers\Inflector;
-use matacms\base\DocumentId;
+use mata\media\models\Media;
+use matacms\interfaces\HumanInterface;
 
-class ActiveRecord extends \mata\db\ActiveRecord {
+class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
 	private $attributeLabels;
-    
 
     /**
      * This needs to be defined in the base class, otherwise __get will not access the property.
      */ 
     private $_related = [];
 
-	public function behaviors() {
-		return [
-			HistoryBehavior::className(),
-            EnvironmentBehavior::className()
-		];
-	}
+    public function behaviors() {
+      return [
+      HistoryBehavior::className(),
+      EnvironmentBehavior::className()
+      ];
+  }
 
+  public function getLabel() {
 
-    public function __get($name) {
-        if ($name == "DocumentId")
-            return new DocumentId($this->getAttribute("DocumentId"));
+      if ($this->hasAttribute("Name") && !empty($this->Name))
+         return $this->Name;
 
-        return parent::__get($name);
-    }
+     if ($this->hasAttribute("Title") && !empty($this->Title))
+         return $this->Title;
 
-	public function getLabel() {
-		
-		if ($this->hasAttribute("Name") && !empty($this->Name))
-			return $this->Name;
+     return $this->getPrimaryKey();
+ }
 
-		if ($this->hasAttribute("Title") && !empty($this->Title))
-			return $this->Title;
+ public function getModelLabel() {
+    $reflection = new \ReflectionClass($this);
+    return Inflector::camel2words($reflection->getShortName());
+}
 
-		return $this->getPrimaryKey();
-	}
-
-    public function getModelLabel() {
-        $reflection = new \ReflectionClass($this);
-        return Inflector::camel2words($reflection->getShortName());
-    }
-
-	public function getTableName() {
-		return static::tableName();
-	}
+public function getTableName() {
+  return static::tableName();
+}
 
     // WHAT IS THIS FUNCTION? How is it different from attributeLabels()? 
-	public function getAttributeLabels($attribute = null) {
-    	if($this->attributeLabels == null)
-    		$this->attributeLabels = $this->attributeLabels();
-        return $this->attributeLabels;
-    }
+public function getAttributeLabels($attribute = null) {
+   if($this->attributeLabels == null)
+      $this->attributeLabels = $this->attributeLabels();
+  return $this->attributeLabels;
+}
 
-	public function setAttributeLabel($attribute, $label)
-    {
-    	$attributeLabels = $this->attributeLabels();
-        $this->attributeLabels[$attribute] = $label;
-    }
+public function setAttributeLabel($attribute, $label)
+{
+   $attributeLabels = $this->attributeLabels();
+   $this->attributeLabels[$attribute] = $label;
+}
 
     /**
      * Returns the text label for the specified attribute.
@@ -114,6 +106,27 @@ class ActiveRecord extends \mata\db\ActiveRecord {
         } else {
             throw new InvalidConfigException("The table does not exist: " . $this->getTableName());
         }
+    }
+
+    public function filterableAttributes() {
+        return [];
+    } 
+
+    /**
+     *  Returns String;
+     */ 
+    public function getVisualRepresentation() {
+
+        echo $this->getDocumentId();
+        $media = Media::find()
+        ->where('DocumentId LIKE :query')
+        ->addParams([':query'=>str_replace("\\", "\\\\", $this->getDocumentId()) . '%'])
+        ->one();
+
+        if ($media)
+            return $media->URI;
+
+        return null;
     }
 
 }
