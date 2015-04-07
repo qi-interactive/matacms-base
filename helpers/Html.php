@@ -16,7 +16,7 @@ class Html extends \yii\helpers\Html {
 	public static function activeCategoryField($model, $options = []) {
 
 		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Name', 'Name');
-		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()])->all(), 'category.Name');
+		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'category.Name');
 
 		if ($value != null)
 			$options["value"] = $value;
@@ -40,7 +40,7 @@ class Html extends \yii\helpers\Html {
 
 		// $items = ArrayHelper::map(Tag::find()->getActiveTags()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$items = ArrayHelper::map(Tag::find()->orderBy('Name ASC')->all(), 'Name', 'Name');
-		$value = ArrayHelper::getColumn(TagItem::find()->with("tag")->where(["DocumentId" => $model->getDocumentId()])->all(), 'tag.Name');
+		$value = ArrayHelper::getColumn(TagItem::find()->with("tag")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'tag.Name');
 
 		if ($value != null)
 			$options["value"] = $value;
@@ -62,7 +62,7 @@ class Html extends \yii\helpers\Html {
 
 	public static function activeMediaField($model, $attribute, $options = []) {
 		return Fineuploader::widget([
-			'name' => $model->getDocumentId(),
+			'name' => $model->getDocumentId()->getId(),
 			'model' => $model,
 			'attribute' => $attribute,
 			'options' => $options,

@@ -25,7 +25,7 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 		if (empty($categoryId = Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID)))
 			return;
 
-		$documentId = $model->getDocumentId();
+		$documentId = $model->getDocumentId()->getId();
 
 		CategoryItem::deleteAll([
 			"DocumentId" => $documentId
