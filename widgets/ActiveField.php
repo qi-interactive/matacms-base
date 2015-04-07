@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Json;
 use yii\base\Event;
 use mata\base\MessageEvent;
-use yii\selectize\Selectize;
+use matacms\widgets\Selectize;
 use zhuravljov\widgets\DatePicker;
 use zhuravljov\widgets\DateTimePicker;
 use yii\helpers\ArrayHelper;
@@ -104,6 +104,14 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function autocomplete($items, $options = [])
     {
+        if(isset($this->model)) {
+            $options['model'] = $this->model;
+        }
+
+        if(isset($this->attribute)) {
+            $options['attribute'] = $this->attribute;
+        }
+
         $options = ArrayHelper::merge([
             'items' => $items,
             'clientOptions' => ['maxItems' => 1]
@@ -119,10 +127,14 @@ class ActiveField extends \yii\widgets\ActiveField {
             $this->options['class'] .= ' multi-choice-dropdown half-max-width-item';
         }
 
+        if(isset($this->model) && isset($this->attribute)) {
+            $options['name'] = \matacms\helpers\Html::getInputName($this->model, $this->attribute);
+        }
+
         $options = ArrayHelper::merge([
             'items' => $items,
             'options' => ['multiple' => true],
-            'clientOptions' => []
+            'clientOptions' => [],
             ], $options);
 
         $this->parts['{input}'] = Selectize::widget($options);
