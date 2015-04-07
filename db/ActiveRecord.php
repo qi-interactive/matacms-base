@@ -6,6 +6,7 @@ use mata\arhistory\behaviors\HistoryBehavior;
 use matacms\environment\behaviors\EnvironmentBehavior;
 use yii\base\InvalidConfigException;
 use yii\helpers\Inflector;
+use matacms\base\DocumentId;
 
 class ActiveRecord extends \mata\db\ActiveRecord {
 
@@ -23,6 +24,14 @@ class ActiveRecord extends \mata\db\ActiveRecord {
             EnvironmentBehavior::className()
 		];
 	}
+
+
+    public function __get($name) {
+        if ($name == "DocumentId")
+            return new DocumentId($this->getAttribute("DocumentId"));
+
+        return parent::__get($name);
+    }
 
 	public function getLabel() {
 		
