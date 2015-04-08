@@ -41,20 +41,24 @@ abstract class Controller extends AuthenticatedController {
 
 	public function actionCreate() {
 		$model = $this->getModel();
-		$model = new $model;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$this->trigger(self::EVENT_MODEL_CREATED, new MessageEvent($model));
 
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
 		} else {
-			return $this->render($this->findView(), [
+			return $this->render("create", [
 				'model' => $model,
 				]);
 		}
 	}
 
 	public function actionUpdate($id) {
+
+		// $locator = new \yii\di\ServiceLocator;
+		// $locator->set('view', new \matacms\web\View);
+		// $this->setView($locator->get("view"));
+
 		$model = $this->findModel($id);
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -62,7 +66,7 @@ abstract class Controller extends AuthenticatedController {
 			return $this->redirect(['index', reset($model->getTableSchema()->primaryKey) => $model->getPrimaryKey()]);
 		} else {
 
-			return $this->render($this->findView(), [
+			return $this->render("update", [
 				'model' => $model,
 				]);
 		}
@@ -71,19 +75,36 @@ abstract class Controller extends AuthenticatedController {
 	public function actionDelete($id) {
 
 		$model = $this->findModel($id);
-		$label = $model->getLabel();
+		$this->trigger(self::EVENT_MODEL_DELETED, new MessageEvent($model));
 		$model->delete();
 
-		$this->trigger(self::EVENT_MODEL_DELETED, new MessageEvent($label));
 		return $this->redirect(['index']);
 	}
 
-	public function findView($view = null) {
+	public function render($view, $params = []) {
 
-		$view =  $view ?: $this->action->id;
+		try {
+			return parent::render($view, $params);
+		} catch (\yii\base\InvalidParamException $e) {
+			// view not found using default Yii routing
+			return $this->renderMataCmsView($view, $params);
+		}
+	}
+
+
+	private function renderMataCMSView($view, $params) {
+
 		$moduleViewFile = Yii::$app->controller->module->getViewPath() . "/" . $this->id . "/" . $view;
-		return file_exists($moduleViewFile . ".php") ? "@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) : "@matacms/views/module/" . $view;
 
+		if (file_exists($moduleViewFile . ".php")) {
+			$view = strpos($moduleViewFile, "vendor") > -1 ? 
+			"@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) : 
+			"@" .  substr($moduleViewFile, stripos($moduleViewFile, "mata-cms"));
+		} else {
+			$view =  "@matacms/views/module/" . $view;
+		}
+
+		return parent::render($view, $params);
 	}
 
 	public function actionIndex() {
@@ -92,7 +113,7 @@ abstract class Controller extends AuthenticatedController {
 		$searchModel = new $searchModel();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		return $this->render($this->findView(), [
+		return $this->render("index", [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			]);
