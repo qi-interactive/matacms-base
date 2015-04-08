@@ -28,15 +28,15 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
   public function getLabel() {
 
       if ($this->hasAttribute("Name") && !empty($this->Name))
-         return $this->Name;
+       return $this->Name;
 
-     if ($this->hasAttribute("Title") && !empty($this->Title))
-         return $this->Title;
+   if ($this->hasAttribute("Title") && !empty($this->Title))
+       return $this->Title;
 
-     return $this->getPrimaryKey();
- }
+   return $this->getPrimaryKey();
+}
 
- public function getModelLabel() {
+public function getModelLabel() {
     $reflection = new \ReflectionClass($this);
     return Inflector::camel2words($reflection->getShortName());
 }
@@ -47,15 +47,15 @@ public function getTableName() {
 
     // WHAT IS THIS FUNCTION? How is it different from attributeLabels()? 
 public function getAttributeLabels($attribute = null) {
-   if($this->attributeLabels == null)
-      $this->attributeLabels = $this->attributeLabels();
-  return $this->attributeLabels;
+ if($this->attributeLabels == null)
+  $this->attributeLabels = $this->attributeLabels();
+return $this->attributeLabels;
 }
 
 public function setAttributeLabel($attribute, $label)
 {
-   $attributeLabels = $this->attributeLabels();
-   $this->attributeLabels[$attribute] = $label;
+ $attributeLabels = $this->attributeLabels();
+ $this->attributeLabels[$attribute] = $label;
 }
 
     /**
@@ -117,7 +117,6 @@ public function setAttributeLabel($attribute, $label)
      */ 
     public function getVisualRepresentation() {
 
-        echo $this->getDocumentId();
         $media = Media::find()
         ->where('DocumentId LIKE :query')
         ->addParams([':query'=>str_replace("\\", "\\\\", $this->getDocumentId()) . '%'])
