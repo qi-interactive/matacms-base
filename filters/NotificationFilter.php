@@ -36,7 +36,17 @@ class NotificationFilter extends Behavior {
 
 	private function observe($actionEvent, $eventToObserve, $messageFormat) {
 		$actionEvent->action->controller->on($eventToObserve, function(\matacms\base\MessageEvent $event) {
-			\Yii::$app->getSession()->setFlash($event->getLevel(), sprintf($event->data, $event->getMessage()->getModelLabel(), $event->getMessage()->getLabel()));
+
+			$message = $event->getMessage();
+
+			if ($message instanceof \matacms\interfaces\HumanInterface) {
+				\Yii::$app->getSession()->setFlash($event->getLevel(), sprintf($event->data, $message->getModelLabel(), $message->getLabel()));
+			} else if(is_string($message)) {
+				\Yii::$app->getSession()->setFlash($event->getLevel(), $message);
+			} else {
+				throw new \yii\web\ServerErrorHttpException(sprintf("Cannot handle %s", get_class($message)));
+			}
+
 		}, $messageFormat);
 	}
 }
