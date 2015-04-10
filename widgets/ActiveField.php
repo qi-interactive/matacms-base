@@ -179,9 +179,7 @@ class ActiveField extends \yii\widgets\ActiveField {
             $options['attribute'] = $this->attribute;
         }
 
-        if(isset($this->options['class'])) {
-            $this->options['class'] .= ' single-choice-dropdown half-max-width-item';
-        } else {
+        if(!isset($this->options['class'])) {
             $this->options['class'] = 'single-choice-dropdown half-max-width-item';
         }
 
