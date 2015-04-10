@@ -10,6 +10,7 @@ use matacms\widgets\Selectize;
 use zhuravljov\widgets\DatePicker;
 use zhuravljov\widgets\DateTimePicker;
 use yii\helpers\ArrayHelper;
+use yii\web\JsExpression;
 
 class ActiveField extends \yii\widgets\ActiveField {
 
@@ -28,6 +29,7 @@ class ActiveField extends \yii\widgets\ActiveField {
 
         $options = array_merge([
             "s3" => "/mata-cms/media/redactor/s3",
+            "changeCallback" => new JsExpression('function() {mata.form.hasChanged = true;}')
             ], $options);
 
         $this->adjustLabelFor($options);
@@ -85,9 +87,9 @@ class ActiveField extends \yii\widgets\ActiveField {
     public function media($options = []) 
     {
         if(isset($this->options['class'])) {
-            $this->options['class'] .= ' half-max-width-item';
+            $this->options['class'] .= ' partial-max-width-item';
         } else {
-            $this->options['class'] = 'half-max-width-item';
+            $this->options['class'] = 'partial-max-width-item';
         }
         
         $this->parts['{input}'] = \mata\widgets\fineuploader\FineUploader::widget([
@@ -95,7 +97,7 @@ class ActiveField extends \yii\widgets\ActiveField {
             'attribute' => $this->attribute,
             'options' => $options,
             'events' => [
-            'complete' => "$(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId);"
+            'complete' => "$(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId); mata.form.hasChanged = true;"
             ]
             ]);
 
@@ -124,7 +126,7 @@ class ActiveField extends \yii\widgets\ActiveField {
     public function multiselect($items, $options = [])
     {
         if(isset($this->options['class'])) {
-            $this->options['class'] .= ' multi-choice-dropdown half-max-width-item';
+            $this->options['class'] .= ' multi-choice-dropdown partial-max-width-item';
         }
 
         if(isset($this->model) && isset($this->attribute)) {
@@ -144,9 +146,9 @@ class ActiveField extends \yii\widgets\ActiveField {
     public function slug($fieldName, $options = []) 
     {
         if(isset($this->options['class'])) {
-            $this->options['class'] .= ' half-max-width-item';
+            $this->options['class'] .= ' partial-max-width-item';
         } else {
-            $this->options['class'] = 'half-max-width-item';
+            $this->options['class'] = 'partial-max-width-item';
         }
 
         $options = ArrayHelper::merge([
@@ -179,8 +181,10 @@ class ActiveField extends \yii\widgets\ActiveField {
             $options['attribute'] = $this->attribute;
         }
 
-        if(!isset($this->options['class'])) {
-            $this->options['class'] = 'single-choice-dropdown half-max-width-item';
+        if(isset($this->options['class'])) {
+            $this->options['class'] .= ' single-choice-dropdown partial-max-width-item';
+        } else {
+            $this->options['class'] = 'single-choice-dropdown partial-max-width-item';
         }
 
         $options = ArrayHelper::merge([
