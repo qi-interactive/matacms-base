@@ -2,24 +2,42 @@
 
 namespace matacms\web;
 
+use mata\modulemenu\models\Module as ModuleModel;
+use mata\helpers\MataModuleHelper;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
+
 class Application extends \mata\web\Application {
-	
-	public $modelMap = [];
 
-	// public function init() {
-	// 	parent::init();
-
-	// 	// $this->parseModelMap();
-	// }
-
-
-	private function parseModelMap() {
-
-		foreach ($this->modelMap as $class => $definition) {
-		    \Yii::$container->set($class, $definition);
-		    $modelName = is_array($definition) ? $definition['class'] : $definition;
-		    // $module->modelMap[$name] = $modelName;
-		}
-
+	public function preInit(&$config) {
+		$this->addMataModules($config);
+		parent::preInit($config);
 	}
+
+	private function addMataModules(&$config) {
+
+		$db = $config["components"]["db"];
+
+		$db = new \yii\db\Connection([
+	      'dsn' => $db["dsn"],
+	      'username' => $db["username"],
+	      'password' => $db["password"],
+  ]);
+
+		$mataModules = $db->createCommand('SELECT * FROM matamodulemenu_module where Enabled = 1')
+		            ->queryAll();
+
+			$modulesDefinition = &$config["modules"];
+
+			foreach ($mataModules as $moduleRecord) {
+
+				$moduleClass = $moduleRecord["Location"] . "Module";
+				$module = new $moduleClass();
+
+				if ($module != null) 
+					$modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), $modulesDefinition[$moduleRecord["Id"]]);
+				
+			}
+	}
+
 }

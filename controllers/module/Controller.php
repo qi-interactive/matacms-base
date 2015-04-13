@@ -18,12 +18,6 @@ abstract class Controller extends AuthenticatedController {
 
 	public function behaviors() {
 		return [
-		'verbs' => [
-		'class' => VerbFilter::className(),
-		'actions' => [
-		'delete' => ['post'],
-		],
-		],
 		'notifications' => [
 		'class' => NotificationFilter::className(),
 		]
