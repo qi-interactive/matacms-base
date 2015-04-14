@@ -8,6 +8,7 @@ use yii\base\InvalidConfigException;
 use yii\helpers\Inflector;
 use mata\media\models\Media;
 use matacms\interfaces\HumanInterface;
+use Yii;
 
 class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
@@ -24,6 +25,12 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
       EnvironmentBehavior::className()
       ];
   }
+
+  public static function find()
+  {
+      return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
+  }
+
 
   public function getLabel() {
 

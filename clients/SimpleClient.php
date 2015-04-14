@@ -35,11 +35,7 @@ abstract class SimpleClient {
 		    return $closureParams[0]::findOne($closureParams[1]);
 		}, null, new \matacms\cache\caching\MataLastUpdatedTimestampDependency());
 
-		if ($model !== null) {
-			return $model;
-		} else {
-			throw new NotFoundHttpException('The requested page does not exist.');
-		}
+		return $model;
 	}
 
 	protected function getClosureParams() {
