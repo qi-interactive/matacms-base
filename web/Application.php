@@ -32,10 +32,10 @@ class Application extends \mata\web\Application {
 			foreach ($mataModules as $moduleRecord) {
 
 				$moduleClass = $moduleRecord["Location"] . "Module";
-				$module = new $moduleClass();
+				$module = new $moduleClass(null);
 
 				if ($module != null) 
-					$modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), $modulesDefinition[$moduleRecord["Id"]]);
+					$modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), isset($modulesDefinition[$moduleRecord["Id"]]) ? $modulesDefinition[$moduleRecord["Id"]] : array());
 				
 			}
 	}
