@@ -15,9 +15,8 @@ class ActiveQuery extends \yii\db\ActiveQuery {
 			$removedModelsCount = 0;
 			$i=0;
 
-
 			foreach ($models as &$model) {
-				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedToRemove()) {
+				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval()) {
 					$model = null;
 					unset($models[$i]);
 					$i++;
