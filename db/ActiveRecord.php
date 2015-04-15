@@ -135,4 +135,14 @@ public function setAttributeLabel($attribute, $label)
         return null;
     }
 
+    public function canBeDeleted()
+    {
+        return true;
+    }
+
+    public function deleteAlertMessage()
+    {
+        return;
+    }
+
 }
