@@ -57,7 +57,7 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 		if(Yii::$app->hasModule("environment")) {
 			$module = \Yii::$app->getModule("environment");
-			$htmlClass = ($module->hasEnvironmentBehavior($model) && $model->hasLiveVersion()) ? \matacms\environment\helpers\Html::class : \yii\helpers\Html::class;
+			$htmlClass = ($module->hasEnvironmentBehavior($model)) ? \matacms\environment\helpers\Html::class : \yii\helpers\Html::class;
 		}
 
 		return $htmlClass::submitButton($content, $options);
