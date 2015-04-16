@@ -13,7 +13,7 @@ use mata\media\models\Media;
 
 class Html extends \yii\helpers\Html {
 
-	public static function activeCategoryField($model, $options = []) {
+	public static function activeCategoryField($model, $attribute, $options = []) {
 
 		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'category.Name');
@@ -22,6 +22,8 @@ class Html extends \yii\helpers\Html {
 			$options["value"] = $value;
 
 		$options["name"] = CategoryItem::REQ_PARAM_CATEGORY_ID;
+
+		$options['id'] = self::getInputId($model, $attribute);
 
 		$options = ArrayHelper::merge([
 			'items' => $items,
