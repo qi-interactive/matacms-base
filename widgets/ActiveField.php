@@ -97,7 +97,7 @@ class ActiveField extends \yii\widgets\ActiveField {
             'attribute' => $this->attribute,
             'options' => $options,
             'events' => [
-            'complete' => "$(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId); mata.form.hasChanged = true;"
+            'complete' => "var inputFileId = '" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "'; $(this).find('input#" . \yii\helpers\Html::getInputId($this->model, $this->attribute) . "').val(uploadSuccessResponse.DocumentId); mata.form.hasChanged = true;"
             ]
             ]);
 
