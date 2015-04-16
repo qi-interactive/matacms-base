@@ -45,18 +45,20 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 		// Create the missing category
 
-			$categoryItem->save();
+		$categoryItem->save();
 
-		// echo $e;
-		// exit;
 		}
 
 	}
 
-	public function submitButton($content = 'Submit', $options = ['class' => 'btn btn-primary']) {
+	public function submitButton($model, $content = 'Submit', $options = ['class' => 'btn btn-primary']) {
 
-		$htmlClass = Yii::$app->hasModule("environment") ? 
-			\matacms\environment\helpers\Html::class : \yii\helpers\Html::class;
+		$htmlClass = \yii\helpers\Html::class;
+
+		if(Yii::$app->hasModule("environment")) {
+			$module = \Yii::$app->getModule("environment");
+			$htmlClass = ($module->hasEnvironmentBehavior($model) && $model->hasLiveVersion()) ? \matacms\environment\helpers\Html::class : \yii\helpers\Html::class;
+		}
 
 		return $htmlClass::submitButton($content, $options);
 	}
