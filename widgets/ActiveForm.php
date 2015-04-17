@@ -53,11 +53,11 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 	public function submitButton($model, $content = 'Submit', $options = ['class' => 'btn btn-primary']) {
 
-		$htmlClass = \yii\helpers\Html::class;
+		$htmlClass = \matacms\helpers\Html::class;
 
 		if(Yii::$app->hasModule("environment")) {
 			$module = \Yii::$app->getModule("environment");
-			$htmlClass = ($module->hasEnvironmentBehavior($model)) ? \matacms\environment\helpers\Html::class : \yii\helpers\Html::class;
+			$htmlClass = ($module->hasEnvironmentBehavior($model)) ? \matacms\environment\helpers\Html::class : \matacms\helpers\Html::class;
 		}
 
 		return $htmlClass::submitButton($content, $options);
