@@ -10,6 +10,7 @@ use mata\tag\models\TagItem;
 use yii\selectize\Selectize;
 use \mata\widgets\fineuploader\FineUploader;
 use mata\media\models\Media;
+use yii\helpers\Html as BaseHtml;
 
 class Html extends \yii\helpers\Html {
 
@@ -170,5 +171,22 @@ class Html extends \yii\helpers\Html {
         }
 
         return implode("\n", $lines);
+    }
+
+    public static function submitButton($content = 'Submit', $options = [])
+    {
+    	$containerId = uniqid("form-submit");
+
+		$retVal = BaseHtml::beginTag("div", [
+			"id" => $containerId,
+			"class" => "form-group submit-form-group"
+			]);
+
+		$options['type'] = 'submit';
+        $retVal .= static::button($content, $options);
+
+		$retVal .= BaseHtml::endTag("div");
+
+        return $retVal;
     }
 }
