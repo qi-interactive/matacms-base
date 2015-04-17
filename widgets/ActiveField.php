@@ -62,10 +62,12 @@ class ActiveField extends \yii\widgets\ActiveField {
         $clientOptions = isset($options["clientOptions"]) ? $options["clientOptions"] : [];
 
         $clientOptions = ArrayHelper::merge([
-          'autoclose' => true,
-            // 'format' => 'd MM yyyy hh:ii',
-          'todayHighlight' => true,
-          'weekStart' => 1
+              'autoclose' => true,
+                // 'format' => 'd MM yyyy hh:ii',
+              'todayHighlight' => true,
+              'weekStart' => 1,
+              'startDate' => date('Y-m-d H:i'),
+              'todayBtn' => 'linked'
           ], $clientOptions);
 
         $this->parts['{input}'] = DateTimePicker::widget([
