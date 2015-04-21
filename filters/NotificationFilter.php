@@ -26,7 +26,7 @@ class NotificationFilter extends Behavior {
 
 		Event::on(View::className(), View::EVENT_BEGIN_BODY, function ($event) {
 			foreach(\Yii::$app->session->getAllFlashes(true) as $key => $message) {
-				echo $event->sender->context->render("@matacms/views/site/_notification", [
+				echo $event->sender->context->renderPartial("@matacms/views/site/_notification", [
 					"message" => $message,
 					"level" => $key
 					]);

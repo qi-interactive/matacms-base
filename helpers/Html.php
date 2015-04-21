@@ -7,7 +7,7 @@ use mata\category\models\Category;
 use mata\category\models\CategoryItem;
 use mata\tag\models\Tag;
 use mata\tag\models\TagItem;
-use yii\selectize\Selectize;
+use matacms\widgets\Selectize;
 use \mata\widgets\fineuploader\FineUploader;
 use mata\media\models\Media;
 use yii\helpers\Html as BaseHtml;
@@ -26,9 +26,15 @@ class Html extends \yii\helpers\Html {
 
 		$options['id'] = self::getInputId($model, $attribute);
 
+		$prompt = 'Select ' . $model->getAttributeLabel($attribute);
+        if(isset($options['prompt'])) {
+            $prompt = $options['prompt'];
+            unset($options['prompt']);
+        }
+
 		$options = ArrayHelper::merge([
 			'items' => $items,
-			'options' => ['multiple'=>true],
+			'options' => ['multiple'=>true, 'prompt' => $prompt],
 			'clientOptions' => [
 			'plugins' => ["remove_button", "drag_drop", "restore_on_backspace"],
 			'create' => false,
@@ -39,7 +45,7 @@ class Html extends \yii\helpers\Html {
 		return Selectize::widget($options);
 	}
 
-	public static function activeTagField($model, $options = []) {
+	public static function activeTagField($model, $attribute, $options = []) {
 
 		// $items = ArrayHelper::map(Tag::find()->getActiveTags()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$items = ArrayHelper::map(Tag::find()->orderBy('Name ASC')->all(), 'Name', 'Name');
@@ -50,9 +56,15 @@ class Html extends \yii\helpers\Html {
 
 		$options["name"] = TagItem::REQ_PARAM_TAG_ID;
 
+		$prompt = 'Select ' . $model->getAttributeLabel($attribute);
+        if(isset($options['prompt'])) {
+            $prompt = $options['prompt'];
+            unset($options['prompt']);
+        }
+
 		$options = ArrayHelper::merge([
 			'items' => $items,
-			'options' => ['multiple'=>true],
+			'options' => ['multiple'=>true, 'prompt' => $prompt],
 			'clientOptions' => [
 			'plugins' => ["remove_button", "drag_drop", "restore_on_backspace"],
 			'create' => true,
