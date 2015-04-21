@@ -11,6 +11,7 @@ use zhuravljov\widgets\DatePicker;
 use zhuravljov\widgets\DateTimePicker;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
+use yii\helpers\Inflector;
 
 class ActiveField extends \yii\widgets\ActiveField {
 
@@ -128,6 +129,12 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function multiselect($items, $options = [])
     {
+        $prompt = 'Select ' . Inflector::camel2words($this->attribute);
+        if(isset($options['prompt'])) {
+            $prompt = $options['prompt'];
+            unset($options['prompt']);
+        }
+        
         if(isset($this->options['class'])) {
             $this->options['class'] .= ' multi-choice-dropdown partial-max-width-item';
         }
@@ -138,7 +145,7 @@ class ActiveField extends \yii\widgets\ActiveField {
 
         $options = ArrayHelper::merge([
             'items' => $items,
-            'options' => ['multiple' => true],
+            'options' => ['multiple' => true, 'prompt' => $prompt],
             'clientOptions' => [],
             ], $options);
 
@@ -170,7 +177,8 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function dropDownList($items, $options = [])
     {
-        $prompt = 'Choose ...';
+
+        $prompt = 'Select ' . Inflector::camel2words($this->attribute);
         if(isset($options['prompt'])) {
             $prompt = $options['prompt'];
             unset($options['prompt']);
@@ -200,6 +208,7 @@ class ActiveField extends \yii\widgets\ActiveField {
             ], $options);
 
         $this->parts['{input}'] = Selectize::widget($options);
+
         return $this;
     }
 }
