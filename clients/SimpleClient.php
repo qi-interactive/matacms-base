@@ -20,6 +20,20 @@ abstract class SimpleClient {
 		return $model;
 	}
 
+	protected function findAllByAttributes($attributes) {
+
+		$model = $this->getModel();
+		$this->closureParams = [$model, $attributes];
+
+		$model = $model::getDb()->cache(function ($db) {
+			$closureParams = $this->getClosureParams();
+		    return $closureParams[0]->find()->where($closureParams[1])->all();
+		}, null, new \matacms\cache\caching\MataLastUpdatedTimestampDependency());
+
+		return $model;
+	}
+
+
 	public function find() {
 		$model = $this->getModel();
 		return $model->find();

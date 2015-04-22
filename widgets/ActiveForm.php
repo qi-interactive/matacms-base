@@ -51,7 +51,9 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 	}
 
-	public function submitButton($model, $content = 'Submit', $options = ['class' => 'btn btn-primary']) {
+	public function submitButton($model, $content = null, $options = ['class' => 'btn btn-primary']) {
+
+		$content = $content != null ? $content : $model->isNewRecord ? "Save" : "Update";
 
 		$htmlClass = \matacms\helpers\Html::class;
 

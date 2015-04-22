@@ -12,6 +12,7 @@ use zhuravljov\widgets\DateTimePicker;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use yii\helpers\Inflector;
+use matacms\settings\models\Setting;
 
 class ActiveField extends \yii\widgets\ActiveField {
 
@@ -19,9 +20,20 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     const EVENT_INIT_DONE = "matacms\widgets\ActiveField::EVENT_INIT_DONE";
 
-    public function init()
-    {
+    const SETTING_SHOW_FIELD = "show-field";
+
+    public function init() {
         Event::trigger(self::className(), self::EVENT_INIT_DONE, new MessageEvent($this));
+    }
+   
+    public function render($content = null) {
+
+        if (Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getIdNoPk()) !== false && 
+            Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getId()) !== false)
+            return parent::render();
+
+        return "";
+
     }
 
     public function wysiwyg($options = [])
