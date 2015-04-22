@@ -80,6 +80,9 @@ $('.smooth-sortable li').draggable(
                 return $(item).data("entity-pk");
             });
 
+            var tickIcon = $('.tick-icon', ui.helper);
+            var rearrangeableIcon = $('.rearrangeable-icon', ui.helper);
+
 
             $.ajax({
                 type: "POST",
@@ -88,8 +91,6 @@ $('.smooth-sortable li').draggable(
                 dataType: "json",
                 success: function(data) {
                     console.log("success");
-                    var tickIcon = $('.tick-icon', ui.helper);
-                    var rearrangeableIcon = $('.rearrangeable-icon', ui.helper);
                     
                     tickIcon.fadeOut(250);
                     rearrangeableIcon.fadeOut(250);
