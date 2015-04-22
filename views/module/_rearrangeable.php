@@ -88,25 +88,25 @@ $('.smooth-sortable li').draggable(
                 dataType: "json",
                 success: function(data) {
                     console.log("success");
+                    var tickIcon = $('.tick-icon', ui.helper);
+                    var rearrangeableIcon = $('.rearrangeable-icon', ui.helper);
+                    
+                    tickIcon.fadeOut(100);
+                    rearrangeableIcon.fadeOut(100);
+
+
+                    tickIcon.fadeIn(100, function() {
+                        setTimeout(function() {
+                            tickIcon.fadeOut(100);
+                            rearrangeableIcon.fadeIn(100);
+                        }, 2500);
+                    });
                 },
                 error: function() {
                    console.log("error");
                }
             });
             
-            var tickIcon = $('.tick-icon', ui.helper);
-            var rearrangeableIcon = $('.rearrangeable-icon', ui.helper);
-            
-            tickIcon.fadeOut(100);
-            rearrangeableIcon.fadeOut(100);
-
-
-            tickIcon.fadeIn(100, function() {
-                setTimeout(function() {
-                    tickIcon.fadeOut(100);
-                    rearrangeableIcon.fadeIn(100);
-                }, 2500);
-            });
             $('.smooth-sortable li').draggable('enable');
         }, matacms.rearrange.sortable.transitionDuration);
     }
