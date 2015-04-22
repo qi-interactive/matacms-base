@@ -54,6 +54,7 @@ $('.smooth-sortable li').draggable(
     start: matacms.rearrange.sortable.start,
     drag: matacms.rearrange.sortable.drag.throttle(17),
     stop: function(event, ui) {
+
     	$('.smooth-sortable li').draggable('disable');
 
         $(matacms.rearrange.sortable.items[matacms.rearrange.sortable.dragItemIndex].node).css({
@@ -61,40 +62,54 @@ $('.smooth-sortable li').draggable(
             'z-index': 9999
         });
 
-setTimeout(function() {
+        setTimeout(function() {
             // Keep the dragged item on top of other items during transition and then reset the Z-Index
-    $(matacms.rearrange.sortable.items[matacms.rearrange.sortable.dragItemIndex].node)[0].style.zIndex = '';
-
+            $(matacms.rearrange.sortable.items[matacms.rearrange.sortable.dragItemIndex].node)[0].style.zIndex = '';
             // Rewrite the dom to match the new order after everthing else is done.
-    matacms.rearrange.sortable.items.forEach(function(item, i, items) {
-      $(item.node).css('top', 0);
-      $('.smooth-sortable').append(item.node);
-  });
+            matacms.rearrange.sortable.items.forEach(function(item, i, items) {
+                $(item.node).css('top', 0);
+                $('.smooth-sortable').append(item.node);
+            });
 
             // Re-enable dragging.
-$('.smooth-sortable li').draggable('enable');
-var actionUrl = $('.smooth-sortable').data('rearrange-action-url');
-var csrf = "$csrf";
-var items = $('.smooth-sortable li');
-var pks = $.map(items, function(item) {
-    return $(item).data("entity-pk");
-});
+
+            var actionUrl = $('.smooth-sortable').data('rearrange-action-url');
+            var csrf = "$csrf";
+            var items = $('.smooth-sortable li');
+            var pks = $.map(items, function(item) {
+                return $(item).data("entity-pk");
+            });
 
 
-$.ajax({
-    type: "POST",
-    url: actionUrl,
-    data: {"pks":pks, "_matacmscsrf": csrf},
-    dataType: "json",
-    success: function(data) {
-        console.log("success");
-    },
-    error: function() {
-       console.log("error");
-   }
-});
-}, matacms.rearrange.sortable.transitionDuration);
-}
+            $.ajax({
+                type: "POST",
+                url: actionUrl,
+                data: {"pks":pks, "_matacmscsrf": csrf},
+                dataType: "json",
+                success: function(data) {
+                    console.log("success");
+                },
+                error: function() {
+                   console.log("error");
+               }
+            });
+            
+            var tickIcon = $('.tick-icon', ui.helper);
+            var rearrangeableIcon = $('.rearrangeable-icon', ui.helper);
+            
+            tickIcon.fadeOut(100);
+            rearrangeableIcon.fadeOut(100);
+
+
+            tickIcon.fadeIn(100, function() {
+                setTimeout(function() {
+                    tickIcon.fadeOut(100);
+                    rearrangeableIcon.fadeIn(100);
+                }, 2500);
+            });
+            $('.smooth-sortable li').draggable('enable');
+        }, matacms.rearrange.sortable.transitionDuration);
+    }
 
 }
 );
