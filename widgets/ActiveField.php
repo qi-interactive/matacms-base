@@ -28,11 +28,15 @@ class ActiveField extends \yii\widgets\ActiveField {
    
     public function render($content = null) {
 
-        if (Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getIdNoPk()) !== false && 
-            Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getId()) !== false)
-            return parent::render();
+        if($this->model instanceof \mata\db\ActiveRecord) {
+            if (Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getIdNoPk()) !== false && 
+                Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getId()) !== false)
+                return parent::render();
 
-        return "";
+            return "";
+        }       
+
+        return parent::render();
 
     }
 
