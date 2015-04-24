@@ -76,7 +76,7 @@ class Html extends \yii\helpers\Html {
 	}
 
 	public static function activeMediaField($model, $attribute, $options = []) {
-		return Fineuploader::widget([
+		return FineUploader::widget([
 			'name' => $model->getDocumentId()->getId(),
 			'model' => $model,
 			'attribute' => $attribute,
