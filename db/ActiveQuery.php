@@ -19,17 +19,13 @@ class ActiveQuery extends \yii\db\ActiveQuery {
 
 			foreach ($models as &$model) {
 				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval()) {
-					
 					$indexesToUnset[] = $i;
 					$model = null;
-					
 				}
 
 				$i++;
 				
 			}
-
-
 
 			foreach ($indexesToUnset as $index)
 				unset($models[$index]);
@@ -37,9 +33,4 @@ class ActiveQuery extends \yii\db\ActiveQuery {
 
 		return $models;
 	}
-
-		
 }
-
-
-?>

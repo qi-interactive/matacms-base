@@ -33,8 +33,8 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 		$categoryItem = new CategoryItem();
 		$categoryItem->attributes = [
-		"CategoryId" => $categoryId,
-		"DocumentId" => $documentId
+			"CategoryId" => $categoryId,
+			"DocumentId" => $documentId
 		];
 
 		try {
@@ -48,7 +48,6 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 		$categoryItem->save();
 
 		}
-
 	}
 
 	public function submitButton($model, $content = null, $options = ['class' => 'btn btn-primary']) {
