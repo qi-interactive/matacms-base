@@ -28,8 +28,8 @@ abstract class Controller extends AuthenticatedController {
 	public function actions() {
 		return [
 		'history' => [
-		'class' => 'mata\arhistory\actions\HistoryAction',
-		'view' => '@matacms/views/history/history'
+			'class' => 'mata\arhistory\actions\HistoryAction',
+			'view' => '@matacms/views/history/history'
 		]
 		];
 	}
@@ -96,7 +96,7 @@ abstract class Controller extends AuthenticatedController {
 			"@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) : 
 			"@" .  substr($moduleViewFile, stripos($moduleViewFile, "mata-cms"));
 		} else {
-			$view =  "@matacms/views/module/" . $view;
+			$view =  "@vendor/matacms/matacms-base/views/module/" . $view;
 		}
 
 		return parent::render($view, $params);
