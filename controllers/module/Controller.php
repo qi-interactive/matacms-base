@@ -9,6 +9,7 @@ use matacms\filters\NotificationFilter;
 use matacms\base\MessageEvent;
 use yii\filters\AccessControl;
 use matacms\controllers\base\AuthenticatedController;
+use yii\data\Sort;
 
 abstract class Controller extends AuthenticatedController {
 
@@ -107,9 +108,20 @@ abstract class Controller extends AuthenticatedController {
 		$searchModel = new $searchModel();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+		// Remove any default orderings
+		$dataProvider->query->orderBy = null;
+
+		 $sort = new Sort([
+		        'attributes' => $searchModel->filterableAttributes(),
+		 ]);
+
+		 
+		$dataProvider->setSort($sort);
+
 		return $this->render("index", [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
+			'sort' => $sort
 			]);
 	}
 
