@@ -50,8 +50,9 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
         </div>
        <?php 
 
-       Pjax::begin([
-           "timeout" => 10000
+       $pjax = Pjax::begin([
+           "timeout" => 10000,
+           "scrollTo" => false
            ]);
 
        if (count($searchModel->filterableAttributes()) > 0):  ?>
@@ -62,7 +63,11 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
                  <ul>
                      <li class="sort-by-label"> Sort by </li>
                      <?php foreach ($searchModel->filterableAttributes() as $attribute): ?>
-                         <li> <?= $sort->link($attribute) ?> </li>
+                         <li> <?php
+                         // Sorting resets page count
+                        $link = $sort->link($attribute);
+                        echo preg_replace("/page=\d*/", "page=1", $link);
+                         ?> </li>
                      <?php endforeach; ?>
                  </ul>
              </div>
@@ -70,12 +75,7 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
              </div>
          <?php endif; ?>
 
-
 <?php
-
-$pjax = Pjax::begin([
-    "timeout" => 10000
-    ]);
 
 echo ListView::widget([
     'dataProvider' => $dataProvider,
