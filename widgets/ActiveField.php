@@ -8,7 +8,7 @@ use yii\base\Event;
 use mata\base\MessageEvent;
 use matacms\widgets\Selectize;
 use zhuravljov\widgets\DatePicker;
-use zhuravljov\widgets\DateTimePicker;
+use mata\widgets\DateTimePicker\DateTimePicker;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use yii\helpers\Inflector;
@@ -78,13 +78,14 @@ class ActiveField extends \yii\widgets\ActiveField {
 
         $clientOptions = isset($options["clientOptions"]) ? $options["clientOptions"] : [];
 
+        $attribute = $this->attribute;
+        $minDate = !empty($this->model->$attribute) ? $this->model->$attribute : date('Y-m-d H:i');
+
         $clientOptions = ArrayHelper::merge([
-              'autoclose' => true,
-                // 'format' => 'd MM yyyy hh:ii',
-              'todayHighlight' => true,
-              'weekStart' => 1,
-              'startDate' => date('Y-m-d H:i'),
-              'todayBtn' => 'linked'
+            'locale' => 'en',
+            'format' => 'YYYY-MM-DD HH:mm',
+            'minDate' => $minDate,
+            'showTodayButton' => true
           ], $clientOptions);
 
         $this->parts['{input}'] = DateTimePicker::widget([
