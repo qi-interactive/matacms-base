@@ -106,9 +106,9 @@ class ActiveField extends \yii\widgets\ActiveField {
     public function media($options = []) 
     {
         if(isset($this->options['class'])) {
-            $this->options['class'] .= ' partial-max-width-item';
+            $this->options['class'] .= ' partial-max-width-item field-media';
         } else {
-            $this->options['class'] = 'partial-max-width-item';
+            $this->options['class'] = 'partial-max-width-item field-media';
         }
         
         $this->parts['{input}'] = \mata\widgets\fineuploader\FineUploader::widget([
