@@ -20,7 +20,7 @@
         "mata/mata-imperavi-redactor": "dev-development",
         "matacms/matacms-settings": "dev-master",
         "matacms/matacms-cache": "dev-development",
-        "matacms/matacms-content-block": "dev-master",
+        "matacms/matacms-content-block": "~1.0.0",
         "matacms/matacms-simple-theme": "dev-development",
         "matacms/matacms-post": "dev-master",
         "matacms/matacms-carousel": "dev-development",
