@@ -79,7 +79,7 @@ class ActiveField extends \yii\widgets\ActiveField {
         $clientOptions = isset($options["clientOptions"]) ? $options["clientOptions"] : [];
 
         $attribute = $this->attribute;
-        $minDate = !empty($this->model->$attribute) ? $this->model->$attribute : date('Y-m-d H:i');
+        $minDate = (!empty($this->model->$attribute) && $this->model->$attribute < date('Y-m-d H:i')) ? $this->model->$attribute : date('Y-m-d H:i');
 
         $clientOptions = ArrayHelper::merge([
             'locale' => 'en',

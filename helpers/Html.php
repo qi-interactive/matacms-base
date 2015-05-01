@@ -19,8 +19,12 @@ class Html extends \yii\helpers\Html {
 		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'category.Name');
 
+
 		if ($value != null)
 			$options["value"] = $value;
+
+		if(!empty($_POST[CategoryItem::REQ_PARAM_CATEGORY_ID]))
+			$options["value"] = $_POST[CategoryItem::REQ_PARAM_CATEGORY_ID];
 
 		$options["name"] = CategoryItem::REQ_PARAM_CATEGORY_ID;
 
