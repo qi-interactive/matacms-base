@@ -46,36 +46,41 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
                 </div>
             </div>
         </div>
-            </div>
-        </div>
-       <?php 
+    </div>
+</div>
+<?php 
 
-       $pjax = Pjax::begin([
-           "timeout" => 10000,
-           "scrollTo" => false
-           ]);
+$pjax = Pjax::begin([
+ "timeout" => 10000,
+ "scrollTo" => false
+ ]);
 
-       if (count($searchModel->filterableAttributes()) > 0):  ?>
+ if (count($searchModel->filterableAttributes()) > 0):  ?>
 
-        <div class="content-block-index">
-            <div class="content-block-top-bar">
-             <div class="top-bar-sort-by-container">
-                 <ul>
-                     <li class="sort-by-label"> Sort by </li>
-                     <?php foreach ($searchModel->filterableAttributes() as $attribute): ?>
-                         <li> <?php
+ <div class="content-block-index">
+     <div class="content-block-top-bar sort-by-wrapper">
+       <div class="top-bar-sort-by-container">
+           <ul>
+               <li class="sort-by-label"> Sort by </li>
+               <?php foreach ($searchModel->filterableAttributes() as $attribute): ?>
+                   <li> <?php
                          // Sorting resets page count
-                        $link = $sort->link($attribute);
-                        echo preg_replace("/page=\d*/", "page=1", $link);
-                         ?> </li>
-                     <?php endforeach; ?>
-                 </ul>
-             </div>
-             </div>
-             </div>
-         <?php endif; ?>
+                    $link = $sort->link($attribute);
+                    echo preg_replace("/page=\d*/", "page=1", $link);
+                    ?> </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+
+<div class="border"> </div>
 
 <?php
+
+
 
 echo ListView::widget([
     'dataProvider' => $dataProvider,
@@ -83,43 +88,44 @@ echo ListView::widget([
     'itemView' => '_itemView',
     'layout' => "{items}\n{pager}",
     'pager' => [
-        'class' => '\mata\widgets\InfiniteScrollPager\InfiniteScrollPager',
-        'clientOptions' => [
-            'pjax' => [
-                'id' => $pjax->options['id'],
-            ],
-            'listViewId' => 'infinite-list-view',
-            'itemSelector' => 'div[data-key]'
-        ]
+    'class' => '\mata\widgets\InfiniteScrollPager\InfiniteScrollPager',
+    'clientOptions' => [
+    'pjax' => [
+    'id' => $pjax->options['id'],
+    ],
+    'listViewId' => 'infinite-list-view',
+    'itemSelector' => 'div[data-key]'
+    ]
     ]
     ]); 
 
 Pjax::end();
-    ?>
+?>
 
-    <?php 
-    if ($isRearrangable)
-        echo $this->render('@vendor/matacms/matacms-base/views/module/_rearrange');
-    ?>
+<?php 
+if ($isRearrangable)
+    echo $this->render('@vendor/matacms/matacms-base/views/module/_rearrange');
+?>
 
-    <?php 
+<?php 
 
-    if (count($searchModel->filterableAttributes()) > 0)
-        $this->registerJs('
-            $("#item-search").on("keyup", function() {
-                var attrs = ' . json_encode($searchModel->filterableAttributes()) . ';
-                var reqAttrs = []
-                var value = $(this).val();
-                $(attrs).each(function(i, attr) {
-                    reqAttrs.push({
-                        "name" : "' . $searchModel->formName() . '[" + attr + "]",
-                        "value" : value
-                    });
+if (count($searchModel->filterableAttributes()) > 0)
+    $this->registerJs('
+        $("#item-search").on("keyup", function() {
+            var attrs = ' . json_encode($searchModel->filterableAttributes()) . ';
+            var reqAttrs = []
+            var value = $(this).val();
+            $(attrs).each(function(i, attr) {
+                reqAttrs.push({
+                    "name" : "' . $searchModel->formName() . '[" + attr + "]",
+                    "value" : value
                 });
+});
 
-                $.pjax.reload({container:"#w0", "url" : "?" + decodeURIComponent($.param(reqAttrs))});
-            })
-        ');
+$.pjax.reload({container:"#w0", "url" : "?" + decodeURIComponent($.param(reqAttrs))});
+})
+');
 
-    ?>
+?>
+
 
