@@ -44,6 +44,13 @@ class ActiveField extends \yii\widgets\ActiveField {
     {
         $options = array_merge($this->inputOptions, $options);
 
+        if(isset($this->options['class'])) {
+            if(strpos($this->options['class'], 'partial-max-width-item') == false)
+                $this->options['class'] .= ' full-width-item';
+        } else {
+            $this->options['class'] = 'full-width-item';
+        }
+
         $options = array_merge([
             "s3" => "/mata-cms/media/redactor/s3",
             "changeCallback" => new JsExpression('function() {mata.form.hasChanged = true;}')
