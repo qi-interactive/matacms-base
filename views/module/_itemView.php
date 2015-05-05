@@ -32,6 +32,7 @@ $module = \Yii::$app->getModule("environment");
 						$eventDateAttribute = $model->getEventDateAttribute();
 						$isLive = $model->$eventDateAttribute > date('Y-m-d H:i:s');
 						$evironmentClass = !$isLive ? 'live' : 'scheduled';
+						$delta = $model->getRevisionDelta();
 						?>
 						<div class="list-version-container <?= $evironmentClass ?>"> 
 							<div class="fadding-container"> </div>
@@ -40,7 +41,7 @@ $module = \Yii::$app->getModule("environment");
 								<?= $isLive ? 'SCHEDULED' : Yii::$app->getModule("environment")->getLiveEnvironment(); ?>
 								</div>
 
-								<?php if ($delta = $model->getRevisionDelta() > 0): ?>
+								<?php if ($delta > 0): ?>
 									<div class="revision-delta">
 										<?= "+ " . $delta . " versions ahead"; 
 										?> 

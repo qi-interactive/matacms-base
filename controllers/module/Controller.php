@@ -5,6 +5,7 @@ namespace matacms\controllers\module;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use mata\helpers\BehaviorHelper;
 use matacms\filters\NotificationFilter;
 use matacms\base\MessageEvent;
 use yii\filters\AccessControl;
@@ -109,12 +110,38 @@ abstract class Controller extends AuthenticatedController {
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 		// Remove any default orderings
-		$dataProvider->query->orderBy = null;
+		// $dataProvider->query->orderBy = null;
 
-		 $sort = new Sort([
-		        'attributes' => $searchModel->filterableAttributes(),
-		 ]);
+		$sort = new Sort([
+			'attributes' => $searchModel->filterableAttributes()
+		]);
 
+		if(!empty($sort->orders)) {
+			$dataProvider->query->orderBy = null;
+		} else {
+
+			if(BehaviorHelper::hasBehavior($searchModel, \mata\arhistory\behaviors\HistoryBehavior::class)) {
+				$dataProvider->query->select('*');
+				$reflection =  new \ReflectionClass($searchModel);
+				$parentClass = $reflection->getParentClass();
+
+				$alias = $searchModel->getTableSchema()->name;
+				$pk = $searchModel->getTableSchema()->primaryKey;
+
+
+				if (is_array($pk)) {
+					if(count($pk) > 1)
+						throw new NotFoundHttpException('Combined primary keys are not supported.');
+					$pk = $pk[0];
+				}
+
+				$aliasWithPk = $alias . '.' . $pk;
+
+				$dataProvider->query->join('INNER JOIN', 'arhistory_revision', 'arhistory_revision.DocumentId = CONCAT(:class, '.$aliasWithPk.')', [':class' => $parentClass->name . '-']);
+	        	$dataProvider->query->andWhere('arhistory_revision.Revision = (SELECT MAX(Revision) FROM `arhistory_revision` WHERE arhistory_revision.`DocumentId` = CONCAT(:class, '.$aliasWithPk.'))', [':class' => $parentClass->name . '-']);
+	        	$dataProvider->query->orderBy('arhistory_revision.DateCreated DESC');
+			}	
+		}
 		 
 		$dataProvider->setSort($sort);
 
