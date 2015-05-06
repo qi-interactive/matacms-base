@@ -4,7 +4,7 @@ use yii\web\View;
 ?>
 
 <h3>Rearrange <?= \Yii::$app->controller->id ?></h3>
-<ol class="smooth-sortable" data-rearrange-action-url="<?= $rearrangeActionUrl ?>">
+<ol class="smooth-sortable overlay-list-container" data-rearrange-action-url="<?= $rearrangeActionUrl ?>">
 	<?php
 	foreach($dataProvider->models as $model):
 		?>
@@ -106,7 +106,7 @@ $.ajax({
 });
 },
 error: function() {
- console.log("error");
+   console.log("error");
 }
 });
 

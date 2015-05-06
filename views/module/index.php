@@ -51,28 +51,28 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
 <?php 
 
 $pjax = Pjax::begin([
- "timeout" => 10000,
- "scrollTo" => false
- ]);
+   "timeout" => 10000,
+   "scrollTo" => false
+   ]);
 
- if (count($searchModel->filterableAttributes()) > 0):  ?>
+   if (count($searchModel->filterableAttributes()) > 0):  ?>
 
- <div class="content-block-index">
-     <div class="content-block-top-bar sort-by-wrapper">
-       <div class="top-bar-sort-by-container">
-           <ul>
-               <li class="sort-by-label"> Sort by </li>
-               <?php foreach ($searchModel->filterableAttributes() as $attribute): ?>
-                   <li> <?php
+   <div class="content-block-index">
+       <div class="content-block-top-bar sort-by-wrapper">
+         <div class="top-bar-sort-by-container">
+             <ul>
+                 <li class="sort-by-label"> Sort by </li>
+                 <?php foreach ($searchModel->filterableAttributes() as $attribute): ?>
+                     <li> <?php
                          // Sorting resets page count
-                    $link = $sort->link($attribute);
-                    echo preg_replace("/page=\d*/", "page=1", $link);
-                    ?> </li>
-                <?php endforeach; ?>
-            </ul>
+                        $link = $sort->link($attribute);
+                        echo preg_replace("/page=\d*/", "page=1", $link);
+                        ?> </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
 
 
@@ -104,7 +104,7 @@ Pjax::end();
 
 <?php 
 if ($isRearrangable)
-    echo $this->render('@vendor/matacms/matacms-base/views/module/_rearrange');
+    echo $this->render('@vendor/matacms/matacms-base/views/module/_overlay');
 ?>
 
 <?php 

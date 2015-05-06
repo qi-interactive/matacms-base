@@ -13,15 +13,17 @@ $this->params['breadcrumbs'][] = 'Update';
 
 <?php
 
-echo Html::a("Versions", sprintf("history?documentId=%s&returnURI=%s", $model->getDocumentId()->getId(), Yii::$app->request->url), ['id' => 'versions-link']);
+echo Html::a("Versions", '#', ['id' => 'versions-link', 'data-url' => sprintf("history?documentId=%s&returnURI=%s", $model->getDocumentId()->getId(), Yii::$app->request->url)]);
 
 ?>
 <div class="content-block-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+	<h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render("_form", [
-        'model' => $model,
-    ]) ?>
+	<?= $this->render("_form", [
+		'model' => $model,
+		]) ?>
 
-</div>
+	</div>
+
+	<?= $this->render('@vendor/matacms/matacms-base/views/module/_overlay'); ?>
