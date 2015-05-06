@@ -6,7 +6,6 @@ use matacms\settings\models\Setting;
 use yii\bootstrap\Modal;
 use kartik\sortable\Sortable;
 use matacms\theme\simple\assets\ModuleIndexAsset;
-use matacms\theme\simple\assets\ModuleUpdateAsset;
 use yii\helpers\Inflector;
 use yii\widgets\Pjax;
 
