@@ -6,6 +6,7 @@ use matacms\settings\models\Setting;
 use yii\bootstrap\Modal;
 use kartik\sortable\Sortable;
 use matacms\theme\simple\assets\ModuleIndexAsset;
+use matacms\theme\simple\assets\ModuleUpdateAsset;
 use yii\helpers\Inflector;
 use yii\widgets\Pjax;
 
@@ -128,4 +129,12 @@ $.pjax.reload({container:"#w0", "url" : "?" + decodeURIComponent($.param(reqAttr
 
 ?>
 
+<script>
 
+    parent.mata.simpleTheme.header
+    .setText('YOU\'RE IN <?= $this->context->module->id ?> MODULE')
+    .hideBackToListView()
+    .hideVersions()
+    .show();
+
+</script>
