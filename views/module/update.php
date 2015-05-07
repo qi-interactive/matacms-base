@@ -34,6 +34,7 @@ echo Html::a("Versions", '#', ['id' => 'versions-link', 'data-url' => sprintf("h
 	.setBackToListViewURL("<?= sprintf("/mata-cms/%s/%s", $this->context->module->id, $this->context->id) ?>")
 	.showBackToListView()
 	.setVersionsURL('<?= sprintf("/mata-cms/%s/%s/history?documentId=%s&returnURI=%s", $this->context->module->id, $this->context->id, urlencode($model->getDocumentId()->getId()), Yii::$app->request->url) ?>')
+	.showVersions()
 	.show();
 
 </script>
