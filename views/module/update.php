@@ -11,11 +11,6 @@ ModuleUpdateAsset::register($this);
 
 <div><?php // echo Html::a("Back to list view", sprintf("/mata-cms/%s/%s", $this->context->module->id, $this->context->id), ['id' => 'back-to-list-view']);?></div>
 
-<?php
-
-echo Html::a("Versions", '#', ['id' => 'versions-link', 'data-url' => sprintf("history?documentId=%s&returnURI=%s", $model->getDocumentId()->getId(), Yii::$app->request->url)]);
-
-?>
 <div class="content-block-update">
 
 	<h1><?= Html::encode($this->title) ?></h1>
