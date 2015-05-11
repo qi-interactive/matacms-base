@@ -25,7 +25,7 @@ class ActiveField extends \yii\widgets\ActiveField {
     public function init() {
         Event::trigger(self::className(), self::EVENT_INIT_DONE, new MessageEvent($this));
     }
-   
+    
     public function render($content = null) {
 
         if($this->model instanceof \mata\db\ActiveRecord) {
@@ -92,8 +92,9 @@ class ActiveField extends \yii\widgets\ActiveField {
             'locale' => 'en',
             'format' => 'YYYY-MM-DD HH:mm',
             'minDate' => $minDate,
-            'showTodayButton' => true
-          ], $clientOptions);
+            'showTodayButton' => true,
+            'icons' => ['today' => 'now-text']
+            ], $clientOptions);
 
         $this->parts['{input}'] = DateTimePicker::widget([
           'model' => $this->model,
