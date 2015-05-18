@@ -1,20 +1,20 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\widgets\videourl\models;
 
 use Yii;
 use yii\base\Model;
 
-/**
- * VideoUrlForm is the model behind the video url form.v
- */
 class VideoUrlForm extends Model
 {
     public $videoUrl;
-    // 
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
@@ -25,9 +25,6 @@ class VideoUrlForm extends Model
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [

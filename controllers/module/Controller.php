@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\controllers\module;
 
@@ -51,10 +57,6 @@ abstract class Controller extends AuthenticatedController {
 
 	public function actionUpdate($id) {
 
-		// $locator = new \yii\di\ServiceLocator;
-		// $locator->set('view', new \matacms\web\View);
-		// $this->setView($locator->get("view"));
-
 		$model = $this->findModel($id);
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -87,7 +89,6 @@ abstract class Controller extends AuthenticatedController {
 		}
 	}
 
-
 	private function renderMataCMSView($view, $params) {
 
 		$moduleViewFile = Yii::$app->controller->module->getViewPath() . "/" . $this->id . "/" . $view;
@@ -109,9 +110,6 @@ abstract class Controller extends AuthenticatedController {
 		$searchModel = new $searchModel();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		// Remove any default orderings
-		// $dataProvider->query->orderBy = null;
-
 		$sort = new Sort([
 			'attributes' => $searchModel->filterableAttributes()
 		]);
@@ -119,7 +117,6 @@ abstract class Controller extends AuthenticatedController {
 		if(!empty($sort->orders)) {
 			$dataProvider->query->orderBy = null;
 		} else {
-
 			if(BehaviorHelper::hasBehavior($searchModel, \mata\arhistory\behaviors\HistoryBehavior::class)) {
 				$dataProvider->query->select('*');
 				$reflection =  new \ReflectionClass($searchModel);
@@ -166,6 +163,5 @@ abstract class Controller extends AuthenticatedController {
 
 	protected abstract function getModel();
 	protected abstract function getSearchModel();
-
+	
 }
-

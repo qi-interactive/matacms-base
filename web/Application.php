@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\web;
 
@@ -19,25 +25,22 @@ class Application extends \mata\web\Application {
 		$db = $config["components"]["db"];
 
 		$db = new \yii\db\Connection([
-	      'dsn' => $db["dsn"],
-	      'username' => $db["username"],
-	      'password' => $db["password"],
-  ]);
+	      	'dsn' => $db["dsn"],
+	      	'username' => $db["username"],
+	      	'password' => $db["password"],
+  		]);
 
-		$mataModules = $db->createCommand('SELECT * FROM matamodulemenu_module where Enabled = 1')
-		            ->queryAll();
+		$mataModules = $db->createCommand('SELECT * FROM matamodulemenu_module where Enabled = 1')->queryAll();
 
-			$modulesDefinition = &$config["modules"];
+		$modulesDefinition = &$config["modules"];
 
-			foreach ($mataModules as $moduleRecord) {
+		foreach ($mataModules as $moduleRecord) {
+			$moduleClass = $moduleRecord["Location"] . "Module";
+			$module = new $moduleClass(null);
 
-				$moduleClass = $moduleRecord["Location"] . "Module";
-				$module = new $moduleClass(null);
-
-				if ($module != null) 
-					$modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), isset($modulesDefinition[$moduleRecord["Id"]]) ? $modulesDefinition[$moduleRecord["Id"]] : array());
-				
-			}
+			if ($module != null) 
+				$modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), isset($modulesDefinition[$moduleRecord["Id"]]) ? $modulesDefinition[$moduleRecord["Id"]] : array());
+		}
 	}
 
 }

@@ -1,4 +1,10 @@
-<?php 
+<?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\widgets;
 
@@ -27,7 +33,6 @@ class ActiveField extends \yii\widgets\ActiveField {
     }
     
     public function render($content = null) {
-
         if($this->model instanceof \mata\db\ActiveRecord) {
             if (Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getIdNoPk()) !== false && 
                 Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getId()) !== false)
@@ -37,7 +42,6 @@ class ActiveField extends \yii\widgets\ActiveField {
         }       
 
         return parent::render();
-
     }
 
     public function wysiwyg($options = [])
@@ -78,7 +82,6 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function dateTime($options = [])
     {
-
         $options = ArrayHelper::merge([
           'class' => 'form-control',
           ], $options);
@@ -202,7 +205,6 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function dropDownList($items, $options = [])
     {
-
         $prompt = 'Select ' . Inflector::camel2words($this->attribute);
         if(isset($options['prompt'])) {
             $prompt = $options['prompt'];
@@ -236,6 +238,5 @@ class ActiveField extends \yii\widgets\ActiveField {
 
         return $this;
     }
+
 }
-
-

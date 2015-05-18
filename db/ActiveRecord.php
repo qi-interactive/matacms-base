@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
+
 namespace matacms\db;
 
 use mata\arhistory\behaviors\HistoryBehavior;
@@ -20,59 +26,50 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
     private $_related = [];
 
     public function behaviors() {
-      return [
-      HistoryBehavior::className(),
-      EnvironmentBehavior::className()
-      ];
-  }
+        return [
+            HistoryBehavior::className(),
+            EnvironmentBehavior::className()
+        ];
+    }
 
-  public static function find()
-  {
-      return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
-  }
+    public static function find()
+    {
+        return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
+    }
 
+    public function getLabel() {
 
-  public function getLabel() {
+        if ($this->hasAttribute("Name") && !empty($this->Name))
+            return $this->Name;
 
-      if ($this->hasAttribute("Name") && !empty($this->Name))
-       return $this->Name;
+        if ($this->hasAttribute("Title") && !empty($this->Title))
+            return $this->Title;
 
-   if ($this->hasAttribute("Title") && !empty($this->Title))
-       return $this->Title;
+        return $this->getPrimaryKey();
+    }
 
-   return $this->getPrimaryKey();
-}
+    public function getModelLabel() {
+        $reflection = new \ReflectionClass($this);
+        return Inflector::camel2words($reflection->getShortName());
+    }
 
-public function getModelLabel() {
-    $reflection = new \ReflectionClass($this);
-    return Inflector::camel2words($reflection->getShortName());
-}
-
-public function getTableName() {
-  return static::tableName();
-}
+    public function getTableName() {
+        return static::tableName();
+    }
 
     // WHAT IS THIS FUNCTION? How is it different from attributeLabels()? 
-public function getAttributeLabels($attribute = null) {
- if($this->attributeLabels == null)
-  $this->attributeLabels = $this->attributeLabels();
-return $this->attributeLabels;
-}
+    public function getAttributeLabels($attribute = null) {
+        if($this->attributeLabels == null)
+            $this->attributeLabels = $this->attributeLabels();
+        return $this->attributeLabels;
+    }
 
-public function setAttributeLabel($attribute, $label)
-{
- $attributeLabels = $this->attributeLabels();
- $this->attributeLabels[$attribute] = $label;
-}
+    public function setAttributeLabel($attribute, $label)
+    {
+        $attributeLabels = $this->attributeLabels();
+        $this->attributeLabels[$attribute] = $label;
+    }
 
-    /**
-     * Returns the text label for the specified attribute.
-     * If the attribute looks like `relatedModel.attribute`, then the attribute will be received from the related model.
-     * @param string $attribute the attribute name
-     * @return string the attribute label
-     * @see generateAttributeLabel()
-     * @see attributeLabels()
-     */
     public function getAttributeLabel($attribute)
     {
         $labels = $this->getAttributeLabels();
@@ -119,9 +116,6 @@ public function setAttributeLabel($attribute, $label)
         return [];
     } 
 
-    /**
-     *  Returns String;
-     */ 
     public function getVisualRepresentation() {
 
         $media = Media::find()

@@ -1,8 +1,9 @@
 <?php
+ 
 /**
- * @author: Harry Tang (giaduy@gmail.com)
- * @link: http://www.greyneuron.com
- * @copyright: Grey Neuron
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
  */
 
 namespace matacms\widgets\videourl;
@@ -31,7 +32,6 @@ class VideoUrl extends InputWidget {
                     $('ul.sortable').matasortable('reload');
                     $('#media-modal').modal('hide');";
 
-
     public function init(){
         parent::init();
 
@@ -47,9 +47,6 @@ class VideoUrl extends InputWidget {
 
     }
 
-    /**
-     * @inheritdoc
-     */
     public function run()
     {
         $this->selector = '#' . $this->htmlOptions['id'];
@@ -79,4 +76,4 @@ class VideoUrl extends InputWidget {
         $options = Json::encode($this->options);
         
     }
-} 
+}

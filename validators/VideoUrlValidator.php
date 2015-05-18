@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\validators;
 
@@ -10,6 +16,7 @@ use matacms\validators\VideoUrlValidationAsset;
 
 class VideoUrlValidator extends Validator
 {
+
     public $vimeoPattern = '/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/';
     public $youtubePattern = '/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([\w-]{10,})/';
 
@@ -17,8 +24,7 @@ class VideoUrlValidator extends Validator
     {
         parent::init();
         if ($this->message === null)
-            $this->message = Yii::t('yii', '{attribute} is not a valid video url.');
-        
+            $this->message = Yii::t('yii', '{attribute} is not a valid video url.');        
     }
 
     public function validateAttribute($model, $attribute)
@@ -26,11 +32,9 @@ class VideoUrlValidator extends Validator
         $value = $model->$attribute;
         if(!$this->identifyVideoServiceProvider($value))
             $model->addError($attribute, \Yii::t('yii', '{attribute} is not a valid video url.', ['attribute' => $model->getAttributeLabel($attribute)]));
-
     }
 
     public function clientValidateAttribute($model, $attribute, $view) {
-
         $options = [
             'vimeoPattern' => new JsExpression($this->prepareJsPattern($this->vimeoPattern)),
             'youtubePattern' => new JsExpression($this->prepareJsPattern($this->youtubePattern)),

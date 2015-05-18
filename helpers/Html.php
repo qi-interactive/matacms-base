@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\helpers;
 
@@ -19,7 +25,6 @@ class Html extends \yii\helpers\Html {
 
 		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'category.Name');
-
 
 		if ($value != null)
 			$options["value"] = $value;
@@ -52,7 +57,6 @@ class Html extends \yii\helpers\Html {
 
 	public static function activeTagField($model, $attribute, $options = []) {
 
-		// $items = ArrayHelper::map(Tag::find()->getActiveTags()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$items = ArrayHelper::map(Tag::find()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(TagItem::find()->with("tag")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'tag.Name');
 
@@ -88,7 +92,6 @@ class Html extends \yii\helpers\Html {
 			'options' => $options,
 			'uploadSuccessEndpoint' => "/mata-cms/media/s3/upload-successful?documentId=" . urlencode($model->getDocumentId($attribute))
 			]);
-
 	}
 
 	public static function dropDownList($name, $selection = null, $items = [], $options = [])

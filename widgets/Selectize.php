@@ -1,4 +1,11 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
+
 namespace matacms\widgets;
 
 use matacms\helpers\Html;
@@ -14,26 +21,18 @@ class Selectize extends \yii\selectize\Selectize
     public $items;
     /**
      * @var array
-     * @see https://github.com/brianreavis/selectize.js/blob/master/docs/usage.md#options
      */
     public $clientOptions;
     /**
      * @var array
-     * @see https://github.com/brianreavis/selectize.js/blob/master/docs/events.md
      */
     public $clientEvents;
 
-    /**
-     * @inheritdoc
-     */
     public function init()
     {
         parent::init();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function run()
     {
         if ($this->hasModel()) {
@@ -50,4 +49,4 @@ class Selectize extends \yii\selectize\Selectize
             }
         }
     }
-} 
+}
