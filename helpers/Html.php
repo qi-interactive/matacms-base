@@ -11,6 +11,7 @@ use matacms\widgets\Selectize;
 use \mata\widgets\fineuploader\FineUploader;
 use mata\media\models\Media;
 use yii\helpers\Html as BaseHtml;
+use yii\web\View;
 
 class Html extends \yii\helpers\Html {
 
@@ -202,6 +203,22 @@ class Html extends \yii\helpers\Html {
         $retVal .= static::button($content, $options);
 
 		$retVal .= BaseHtml::endTag("div");
+
+		$formId = $options['formId'];
+
+		\Yii::$app->view->registerJs("			
+			var form = $('#$formId'),
+			isSubmitted = false;
+	
+			form.on('submit', function(e) {
+				if(!isSubmitted) {
+					isSubmitted = form.yiiActiveForm('submitForm');
+					return isSubmitted;
+				}	
+				$('#$containerId button').attr('disabled', 'disabled');
+				return false;			
+			}); 
+		", View::POS_READY);
 
         return $retVal;
     }

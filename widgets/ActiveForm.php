@@ -54,6 +54,8 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 
 		$content = $content != null ? $content : $model->isNewRecord ? "Save" : "Update";
 
+		$options['formId'] = $this->getId();
+
 		$htmlClass = \matacms\helpers\Html::class;
 
 		if(Yii::$app->hasModule("environment")) {
