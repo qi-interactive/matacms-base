@@ -19,9 +19,13 @@ Installation
 Changelog
 ---------
 
+## 1.0.3-alpha, May 18, 2015
+
+- Updated pointer to mata-tag module.
+
 ## 1.0.2-alpha, May 18, 2015
 
-- Updates pointer to mata-rbac module.
+- Updated pointer to mata-rbac module.
 
 ## 1.0.1-alpha, May 18, 2015
 
