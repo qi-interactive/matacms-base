@@ -29,7 +29,7 @@
     "config": {
         "process-timeout": 1800
     },
-   "autoload": {
+    "autoload": {
         "psr-4": {
             "matacms\\": ""
         }
