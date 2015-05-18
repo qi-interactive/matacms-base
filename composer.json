@@ -23,7 +23,7 @@
         "matacms/matacms-carousel": "~1.0.0-alpha",
         "matacms/matacms-person":"~1.0.0-alpha",
         "yiidoc/yii2-selectize": "dev-master",
-        "mata/mata-rbac": "~1.0.0-alpha",
+        "mata/mata-rbac": "*",
         "matacms/matacms-environment": "~1.0.0-alpha"
     },
     "config": {
