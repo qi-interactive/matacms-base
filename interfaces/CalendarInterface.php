@@ -6,7 +6,7 @@
  * @license http://www.matacms.com/license/
  */
 
-namespace matacms\base;
+namespace matacms\interfaces;
 
 interface CalendarInterface
 {
