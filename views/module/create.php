@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use matacms\theme\simple\assets\ModuleUpdateAsset;
 
-
+ModuleUpdateAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model mata\contentblock\models\ContentBlock */
 
@@ -10,8 +11,6 @@ $this->title = sprintf('Create %s', \Yii::$app->controller->id);
 $this->params['breadcrumbs'][] = ['label' => 'Content Blocks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<div><?= Html::a("Back to list view", sprintf("/mata-cms/%s/%s", $this->context->module->id, $this->context->id), ['id' => 'back-to-list-view']);?></div>
 
 <div class="content-block-create">
 
@@ -22,3 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<script>
+
+	parent.mata.simpleTheme.header
+	.showBackToListView()
+	.setBackToListViewURL("<?= sprintf("/mata-cms/%s/%s", $this->context->module->id, $this->context->id) ?>")
+	.hideVersions()
+	.show();
+
+</script>
