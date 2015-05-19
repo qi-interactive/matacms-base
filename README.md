@@ -19,7 +19,7 @@ Installation
 Changelog
 ---------
 
-## 1.0.4-alpha, May 18, 2015
+## 1.0.4-alpha, May 19, 2015
 
 - Added JS trigger for 'mediaChanged' event for FineUploader on upload complete.
 
