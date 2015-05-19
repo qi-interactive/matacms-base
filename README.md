@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.0.4-alpha, May 18, 2015
+
+- Added JS trigger for 'mediaChanged' event for FineUploader on upload complete.
+
 ## 1.0.3-alpha, May 18, 2015
 
 - Updated pointer to mata-tag module.
