@@ -1,6 +1,10 @@
 <?php
 use yii\web\View;
 
+use matacms\environment\models\ItemEnvironment;
+
+$environmentModule = \Yii::$app->getModule("environment");
+
 ?>
 
 <h3>Rearrange <?= \Yii::$app->controller->id ?></h3>
@@ -35,7 +39,32 @@ use yii\web\View;
             </g>
         </svg>
     </div>
-    <div class="fadding-container"> </div>
+    <?php if(!$environmentModule->hasEnvironmentBehavior($model)): ?>
+        <div class="fadding-container"> </div>
+    <?php endif; ?>
+    
+    <?php if($environmentModule->hasEnvironmentBehavior($model)): 
+    $ie = ItemEnvironment::find()->where([
+        "DocumentId" => $model->getDocumentId()->getId(),
+        "Revision" => $model->_revision->Revision,
+        ])->one();
+    
+    if ($ie != null):
+       
+        ?>
+    <div class="small-list list-version-container <?= strtolower($ie->Status) ?>"> 
+        <div class="fadding-container"> </div>
+        <div class="list-version-inner-container">
+            <div class="version-status"> 
+               
+                <span><?= $ie->Status ?></span>
+            </div>
+            
+        </div>
+    </div>
+<?php endif; ?>
+<?php endif; ?>
+
 </li>
 <?php endforeach; ?>
 </ol>
@@ -106,7 +135,7 @@ $.ajax({
 });
 },
 error: function() {
-   console.log("error");
+ console.log("error");
 }
 });
 
@@ -121,4 +150,7 @@ JS;
 $this->registerJs($script, View::POS_READY);
 
 ?>
+
+
+
 
