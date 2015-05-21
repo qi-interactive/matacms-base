@@ -1,4 +1,10 @@
-<?php 
+<?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\widgets;
 
@@ -21,7 +27,6 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 	}
 
 	private function processSave($model) {
-
 		if (empty($categoryId = Yii::$app->request->post(CategoryItem::REQ_PARAM_CATEGORY_ID)))
 			return;
 
@@ -40,19 +45,17 @@ class ActiveForm extends \yii\widgets\ActiveForm {
 		try {
 			if ($categoryItem->save() == false)
 				throw new \yii\web\ServerErrorHttpException($categoryItem->getTopError());
-
 		} catch(yii\db\IntegrityException $e) {
-
-		// Create the missing category
-
-		$categoryItem->save();
-
+			// Create the missing category
+			$categoryItem->save();
 		}
 	}
 
 	public function submitButton($model, $content = null, $options = ['class' => 'btn btn-primary']) {
 
 		$content = $content != null ? $content : $model->isNewRecord ? "Save" : "Update";
+
+		$options['formId'] = $this->getId();
 
 		$htmlClass = \matacms\helpers\Html::class;
 

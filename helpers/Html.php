@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\helpers;
 
@@ -11,6 +17,7 @@ use matacms\widgets\Selectize;
 use \mata\widgets\fineuploader\FineUploader;
 use mata\media\models\Media;
 use yii\helpers\Html as BaseHtml;
+use yii\web\View;
 
 class Html extends \yii\helpers\Html {
 
@@ -18,7 +25,6 @@ class Html extends \yii\helpers\Html {
 
 		$items = ArrayHelper::map(Category::find()->grouping($model)->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(CategoryItem::find()->with("category")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'category.Name');
-
 
 		if ($value != null)
 			$options["value"] = $value;
@@ -51,7 +57,6 @@ class Html extends \yii\helpers\Html {
 
 	public static function activeTagField($model, $attribute, $options = []) {
 
-		// $items = ArrayHelper::map(Tag::find()->getActiveTags()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$items = ArrayHelper::map(Tag::find()->orderBy('Name ASC')->all(), 'Name', 'Name');
 		$value = ArrayHelper::getColumn(TagItem::find()->with("tag")->where(["DocumentId" => $model->getDocumentId()->getId()])->all(), 'tag.Name');
 
@@ -87,7 +92,6 @@ class Html extends \yii\helpers\Html {
 			'options' => $options,
 			'uploadSuccessEndpoint' => "/mata-cms/media/s3/upload-successful?documentId=" . urlencode($model->getDocumentId($attribute))
 			]);
-
 	}
 
 	public static function dropDownList($name, $selection = null, $items = [], $options = [])
@@ -202,6 +206,22 @@ class Html extends \yii\helpers\Html {
         $retVal .= static::button($content, $options);
 
 		$retVal .= BaseHtml::endTag("div");
+
+		$formId = $options['formId'];
+
+		\Yii::$app->view->registerJs("			
+			var form = $('#$formId'),
+			isSubmitted = false;
+	
+			form.on('submit', function(e) {
+				if(!isSubmitted) {
+					isSubmitted = form.yiiActiveForm('submitForm');
+					return isSubmitted;
+				}	
+				$('#$containerId button').attr('disabled', 'disabled');
+				return false;			
+			}); 
+		", View::POS_READY);
 
         return $retVal;
     }

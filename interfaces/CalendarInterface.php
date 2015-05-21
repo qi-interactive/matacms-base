@@ -6,10 +6,11 @@
  * @license http://www.matacms.com/license/
  */
 
-namespace matacms\base;
+namespace matacms\interfaces;
 
-class Constants {
+interface CalendarInterface
+{
+    public static function getEventDateAttribute();
 
-	const LOG_CATEGORY = "matacms";
-
+    public function getEventDate();
 }

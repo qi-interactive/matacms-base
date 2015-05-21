@@ -1,4 +1,10 @@
-<?php 
+<?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\filters;
 
@@ -15,9 +21,6 @@ class NotificationFilter extends Behavior {
 		return [Controller::EVENT_BEFORE_ACTION => 'beforeAction'];
 	}
 
-	/**
-	 * @param ActionEvent $event
-	 */
 	public function beforeAction($event) {
 		
 		$this->observe($event, Controller::EVENT_MODEL_CREATED, "%s <strong>%s</strong> has been <strong>created</strong>.");
