@@ -17,6 +17,12 @@ class View extends \yii\web\View {
 		$controller =  Yii::$app->controller;
 		$moduleViewFile = $controller->module->getViewPath() . "/" . $controller->id . "/" . $view;
 
+		$particularsView = "@matacms/modules/" . substr($moduleViewFile, stripos($moduleViewFile, "vendor") + 7);
+
+		if (file_exists(Yii::getAlias($particularsView) . ".php"))
+			return parent::render($particularsView, $params, $context);
+
+
 		if (file_exists($moduleViewFile . ".php")) {
 
 			$view = strpos($moduleViewFile, "vendor") > -1 ? 
@@ -24,21 +30,13 @@ class View extends \yii\web\View {
 			"@" .  substr($moduleViewFile, stripos($moduleViewFile, "mata-cms"));
 			
 			$view = str_replace("mata-cms", "matacms", $view);
-			return parent::render($view, $params, $context);
-		}
 
-		try {
-			\Yii::info(sprintf("Module file not found. Search path: %s", $moduleViewFile), 
-				\matacms\base\Constants::LOG_CATEGORY);
-
-			
-			$particularsView = "@matacms/particulars/" . substr($moduleViewFile, stripos($moduleViewFile, "vendor") + 7);
-			return parent::render($particularsView, $params, $context);
-		} catch (\yii\base\InvalidParamException $e) {
-			\Yii::info(sprintf("Particulars not found. Search path: %s", $particularsView), 
+			\Yii::info(sprintf("Module file found. Search path: %s", $view), 
 				\matacms\base\Constants::LOG_CATEGORY);
 
 			return parent::render($view, $params, $context);
 		}
+
+		return parent::render($view, $params, $context);
 	}
 }
