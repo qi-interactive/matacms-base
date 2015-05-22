@@ -19,7 +19,11 @@ Installation
 Changelog
 ---------
 
-## 1.0.5-alpha, May 19, 2015
+## 1.0.6-alpha, May 22, 2015
+
+- Updated Rearrangeable view with environment status.
+
+## 1.0.5-alpha, May 21, 2015
 
 - Updated View.php
 
