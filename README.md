@@ -19,6 +19,11 @@ Installation
 Changelog
 ---------
 
+
+## 1.0.7-alpha, May 25, 2015
+
+- Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection 
+
 ## 1.0.6-alpha, May 22, 2015
 
 - Updated Rearrangeable view with environment status.

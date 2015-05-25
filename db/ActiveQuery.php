@@ -9,34 +9,73 @@
 namespace matacms\db;
 
 use Yii;
+use matacms\base\MessageEvent;
 
 class ActiveQuery extends \yii\db\ActiveQuery {
 
-	public function populate($rows) {
-		
-		$models = parent::populate($rows);
+	/**
+	 * Prepares for building SQL.
+	 * This event is fired by [[QueryBuilder]] when it starts to build SQL from a query object.
+	 * You may override this method to do some final preparation work when converting a query into a SQL statement.
+	 * @return MessageEvent, with [[$this]] as sender and [[$builder]] as message.
+	 */
+	const EVENT_BEFORE_PREPARE_STATEMENT = "EVENT_BEFORE_PREPARE_STATEMENT";
 
-		if ($envModule = Yii::$app->getModule("environment") ) {
+	public function prepare($builder) {
+		$this->trigger(self::EVENT_BEFORE_PREPARE_STATEMENT);
+	    return parent::prepare($builder);
+	}
 
-			$removedModelsCount = 0;
-			$i=0;
+	/**
+	 * Changed visibility to public 
+	 * @param ActiveQuery $query
+	 * @return array the table name and the table alias.
+	 */
+	public function getQueryTableName($query)
+	{
+	    if (empty($query->from)) {
+	        /* @var $modelClass ActiveRecord */
+	        $modelClass = $query->modelClass;
+	        $tableName = $modelClass::tableName();
+	    } else {
+	        $tableName = '';
+	        foreach ($query->from as $alias => $tableName) {
+	            if (is_string($alias)) {
+	                return [$tableName, $alias];
+	            } else {
+	                break;
+	            }
+	        }
+	    }
 
-			$indexesToUnset = [];
+	    if (preg_match('/^(.*?)\s+({{\w+}}|\w+)$/', $tableName, $matches)) {
+	        $alias = $matches[2];
+	    } else {
+	        $alias = $tableName;
+	    }
 
-			foreach ($models as &$model) {
-				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval()) {
-					$indexesToUnset[] = $i;
-					$model = null;
-				}
+	    return [$tableName, $alias];
+	}
 
-				$i++;
-				
-			}
+	/**
+	 * This function should be used for models that cannot be updated, such as Media.
+	 * Fetching such records will use cache, if available, which does not expire
+	 */ 
+	public function cachedOne($db = null) {
 
-			foreach ($indexesToUnset as $index)
-				unset($models[$index]);
-		}
+		$modelClass = $this->modelClass;
+		$command = $this->createCommand($db);
 
-		return $models;
+		$key = $this->modelClass . serialize($command->params);
+
+	    $cache = Yii::$app->cache;
+	    $data = $cache->get($key);
+
+	    if ($data === false) {
+	    	$data = parent::one($db);
+	        $cache->set($key, $data);
+	    }
+
+	    return $data;
 	}
 }
