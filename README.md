@@ -20,7 +20,7 @@ Changelog
 ---------
 
 
-## 1.0.7-alpha, May 25, 2015
+## TO BE RELEASED
 
 - Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection 
 
