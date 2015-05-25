@@ -23,6 +23,8 @@ Changelog
 ## TO BE RELEASED
 
 - Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection 
+- ActiveQuery extends \mata\db\ActiveQuery
+- Added dependency on mata/mata-framework : ~1.0.3-alpha which introduced \mata\db\ActiveQuery
 
 ## 1.0.6-alpha, May 22, 2015
 
