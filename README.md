@@ -19,6 +19,13 @@ Installation
 Changelog
 ---------
 
+## 1.0.8-alpha, May 26, 2015
+
+- matacms\controllers\module\Controller::EVENT_MODEL_DELETED now fires after delete() on a model
+- NotificationFilter handled errors when removing entities
+- Updated Rearrangeable view with environment statuses
+
+
 ## 1.0.7-alpha, May 26, 2015
 
 - Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection 

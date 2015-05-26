@@ -73,8 +73,8 @@ abstract class Controller extends AuthenticatedController {
 	public function actionDelete($id) {
 
 		$model = $this->findModel($id);
-		$this->trigger(self::EVENT_MODEL_DELETED, new MessageEvent($model));
 		$model->delete();
+		$this->trigger(self::EVENT_MODEL_DELETED, new MessageEvent($model));
 
 		return $this->redirect(['index']);
 	}
