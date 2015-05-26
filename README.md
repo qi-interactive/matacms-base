@@ -19,8 +19,7 @@ Installation
 Changelog
 ---------
 
-
-## TO BE RELEASED
+## 1.0.7-alpha, May 26, 2015
 
 - Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection 
 - ActiveQuery extends \mata\db\ActiveQuery
