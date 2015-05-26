@@ -48,21 +48,35 @@ $environmentModule = \Yii::$app->getModule("environment");
         "DocumentId" => $model->getDocumentId()->getId(),
         "Revision" => $model->_revision->Revision,
         ])->one();
-    
-    if ($ie != null):
-       
+
+    $evironmentClass = 'draft';
+    $isLive = false;
+    $delta = 0;
+    $status = 'DRAFT';
+
+    if($model->hasLiveVersion()) {
+        $eventDateAttribute = $model->getEventDateAttribute();
+        $isLive = $model->$eventDateAttribute > date('Y-m-d H:i:s');
+        $evironmentClass = !$isLive ? 'live' : 'scheduled';
+        $delta = $model->getRevisionDelta();
+        $status = $isLive ? 'SCHEDULED' : Yii::$app->getModule("environment")->getLiveEnvironment();
+    }
+
         ?>
-    <div class="small-list list-version-container <?= strtolower($ie->Status) ?>"> 
+    <div class="small-list list-version-container <?= strtolower($evironmentClass) ?>"> 
         <div class="fadding-container"> </div>
         <div class="list-version-inner-container">
-            <div class="version-status"> 
-               
-                <span><?= $ie->Status ?></span>
+            <div class="version-status">               
+                <span><?= $status; ?></span>
             </div>
-            
+            <?php if ($delta > 0): ?>
+                <div class="revision-delta">
+                    <?= "+ " . $delta . " versions ahead"; 
+                    ?> 
+                </div>
+            <?php endif; ?>
         </div>
     </div>
-<?php endif; ?>
 <?php endif; ?>
 
 </li>
