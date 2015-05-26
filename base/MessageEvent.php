@@ -25,4 +25,8 @@ class MessageEvent extends \mata\base\MessageEvent {
     public function getLevel() {
         return $this->level;
     }
+
+    public function setLevel($level) {
+        $this->level = $level;
+    }
 }

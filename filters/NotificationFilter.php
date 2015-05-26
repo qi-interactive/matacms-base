@@ -38,9 +38,15 @@ class NotificationFilter extends Behavior {
 	}
 
 	private function observe($actionEvent, $eventToObserve, $messageFormat) {
-		$actionEvent->action->controller->on($eventToObserve, function(\matacms\base\MessageEvent $event) {
+		$actionEvent->action->controller->on($eventToObserve, function(MessageEvent $event) {
 
 			$message = $event->getMessage();
+
+			if ($event->name == Controller::EVENT_MODEL_DELETED && 
+				$message->hasErrors()) {
+				$event->setLevel(MessageEvent::LEVEL_WARNING);
+				$event->data = $message->getTopError();
+			}
 
 			if ($message instanceof \matacms\interfaces\HumanInterface) {
 				\Yii::$app->getSession()->setFlash($event->getLevel(), sprintf($event->data, $message->getModelLabel(), $message->getLabel()));
