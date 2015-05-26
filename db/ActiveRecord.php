@@ -32,8 +32,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
         ];
     }
 
-    public static function find()
-    {
+    public static function find() {
         return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
     }
 
@@ -64,14 +63,12 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
         return $this->attributeLabels;
     }
 
-    public function setAttributeLabel($attribute, $label)
-    {
+    public function setAttributeLabel($attribute, $label) {
         $attributeLabels = $this->attributeLabels();
         $this->attributeLabels[$attribute] = $label;
     }
 
-    public function getAttributeLabel($attribute)
-    {
+    public function getAttributeLabel($attribute) {
         $labels = $this->getAttributeLabels();
         if (isset($labels[$attribute])) {
             return ($labels[$attribute]);
@@ -102,8 +99,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
         return $this->generateAttributeLabel($attribute);
     }
 
-    public function getInstanceTableSchema()
-    {
+    public function getInstanceTableSchema() {
         $schema = static::getDb()->getSchema()->getTableSchema($this->getTableName());
         if ($schema !== null) {
             return $schema;
@@ -129,14 +125,11 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
         return null;
     }
 
-    public function canBeDeleted()
-    {
+    public function canBeDeleted() {
         return true;
     }
 
-    public function deleteAlertMessage()
-    {
+    public function deleteAlertMessage() {
         return;
     }
-
 }
