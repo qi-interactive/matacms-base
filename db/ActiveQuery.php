@@ -13,6 +13,8 @@ use matacms\base\MessageEvent;
 
 class ActiveQuery extends \mata\db\ActiveQuery {
 
+	public $handled = false;
+
 	/**
 	 * Prepares for building SQL.
 	 * This event is fired by [[QueryBuilder]] when it starts to build SQL from a query object.
@@ -22,7 +24,11 @@ class ActiveQuery extends \mata\db\ActiveQuery {
 	const EVENT_BEFORE_PREPARE_STATEMENT = "EVENT_BEFORE_PREPARE_STATEMENT";
 
 	public function prepare($builder) {
-		$this->trigger(self::EVENT_BEFORE_PREPARE_STATEMENT);
+		if(!$this->handled) {
+			$this->trigger(self::EVENT_BEFORE_PREPARE_STATEMENT);
+			$this->handled = true;
+		}
+		
 	    return parent::prepare($builder);
 	}
 

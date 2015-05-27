@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.0.9-alpha, May 27, 2015
+
+- EVENT_BEFORE_PREPARE_STATEMENT is fired only once (Bug fix)
+
 ## 1.0.8-alpha, May 26, 2015
 
 - matacms\controllers\module\Controller::EVENT_MODEL_DELETED now fires after delete() on a model
