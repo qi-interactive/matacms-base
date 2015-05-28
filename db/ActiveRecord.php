@@ -115,7 +115,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
     public function getVisualRepresentation() {
 
         $media = Media::find()
-        ->where('DocumentId LIKE :query')
+        ->where('`For` LIKE :query')
         ->addParams([':query'=>str_replace("\\", "\\\\", $this->getDocumentId()) . '%'])
         ->one();
 

@@ -19,6 +19,11 @@ Installation
 Changelog
 ---------
 
+## TBD
+- Moved a lot of logic from [[matacms\db\ActiveQuery]] to [[mata\db\ActiveQuery]]
+- Updated query for visual representation
+
+
 ## 1.0.9-alpha, May 27, 2015
 
 - EVENT_BEFORE_PREPARE_STATEMENT is fired only once (Bug fix)
