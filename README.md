@@ -19,7 +19,7 @@ Installation
 Changelog
 ---------
 
-## 1.0.10-alpha, May 28, 2015
+## 1.1.0-alpha, May 28, 2015
 - Moved a lot of logic from [[matacms\db\ActiveQuery]] to [[mata\db\ActiveQuery]]
 - Updated query for visual representation
 
