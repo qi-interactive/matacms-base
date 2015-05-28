@@ -20,8 +20,12 @@ class ActiveQuery extends \mata\db\ActiveQuery {
 			$removedModelsCount = 0;
 			$i=0;
 			$indexesToUnset = [];
+
 			foreach ($models as &$model) {
-				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval()) {
+				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval() || 
+					// HACK
+					get_class($model) == "mata\media\models\Media" && $model->URI == "DELETED" && $this->returnEmpty == false
+					) {
 					$indexesToUnset[] = $i;
 					$model = null;
 				}
