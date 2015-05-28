@@ -13,52 +13,29 @@ use matacms\base\MessageEvent;
 
 class ActiveQuery extends \mata\db\ActiveQuery {
 
-	public $handled = false;
-
-	/**
-	 * Prepares for building SQL.
-	 * This event is fired by [[QueryBuilder]] when it starts to build SQL from a query object.
-	 * You may override this method to do some final preparation work when converting a query into a SQL statement.
-	 * @return MessageEvent, with [[$this]] as sender and [[$builder]] as message.
-	 */
-	const EVENT_BEFORE_PREPARE_STATEMENT = "EVENT_BEFORE_PREPARE_STATEMENT";
-
-	public function prepare($builder) {
-		if(!$this->handled) {
-			$this->trigger(self::EVENT_BEFORE_PREPARE_STATEMENT);
-			$this->handled = true;
-		}
+	public function populate($rows) {
 		
-	    return parent::prepare($builder);
+		$models = parent::populate($rows);
+		if ($envModule = Yii::$app->getModule("environment") ) {
+			$removedModelsCount = 0;
+			$i=0;
+			$indexesToUnset = [];
+
+			foreach ($models as &$model) {
+				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval() || 
+					// HACK
+					get_class($model) == "mata\media\models\Media" && $model->URI == "DELETED" && $this->returnEmpty == false
+					) {
+					$indexesToUnset[] = $i;
+					$model = null;
+				}
+				$i++;
+				
+			}
+			foreach ($indexesToUnset as $index)
+				unset($models[$index]);
+		}
+		return $models;
 	}
 
-	/**
-	 * Changed visibility to public 
-	 * @param ActiveQuery $query
-	 * @return array the table name and the table alias.
-	 */
-	public function getQueryTableName($query) {
-	    if (empty($query->from)) {
-	        /* @var $modelClass ActiveRecord */
-	        $modelClass = $query->modelClass;
-	        $tableName = $modelClass::tableName();
-	    } else {
-	        $tableName = '';
-	        foreach ($query->from as $alias => $tableName) {
-	            if (is_string($alias)) {
-	                return [$tableName, $alias];
-	            } else {
-	                break;
-	            }
-	        }
-	    }
-
-	    if (preg_match('/^(.*?)\s+({{\w+}}|\w+)$/', $tableName, $matches)) {
-	        $alias = $matches[2];
-	    } else {
-	        $alias = $tableName;
-	    }
-
-	    return [$tableName, $alias];
-	}
 }
