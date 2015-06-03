@@ -12,30 +12,4 @@ use Yii;
 use matacms\base\MessageEvent;
 
 class ActiveQuery extends \mata\db\ActiveQuery {
-
-	public function populate($rows) {
-		
-		$models = parent::populate($rows);
-		if ($envModule = Yii::$app->getModule("environment") ) {
-			$removedModelsCount = 0;
-			$i=0;
-			$indexesToUnset = [];
-
-			foreach ($models as &$model) {
-				if ($envModule->hasEnvironmentBehavior($model) && $model->getMarkedForRemoval() || 
-					// HACK
-					get_class($model) == "mata\media\models\Media" && $model->URI == "DELETED" && $this->returnEmpty == false
-					) {
-					$indexesToUnset[] = $i;
-					$model = null;
-				}
-				$i++;
-				
-			}
-			foreach ($indexesToUnset as $index)
-				unset($models[$index]);
-		}
-		return $models;
-	}
-
 }
