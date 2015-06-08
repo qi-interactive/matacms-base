@@ -19,6 +19,9 @@ Installation
 Changelog
 ---------
 
+## 1.1.2-alpha
+- Security fixes -- matacms\controllers\module\Controller was overwritting behaviors
+
 ## 1.1.1-alpha, May 28, 2015
 - Bug fixes
 

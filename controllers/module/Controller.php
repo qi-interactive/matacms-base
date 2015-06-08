@@ -25,11 +25,11 @@ abstract class Controller extends AuthenticatedController {
 	const EVENT_MODEL_DELETED = "EVENT_MODEL_DELETED";
 
 	public function behaviors() {
-		return [
+		return array_merge([
 		'notifications' => [
 		'class' => NotificationFilter::className(),
 		]
-		];
+		], parent::behaviors());
 	}
 
 	public function actions() {
