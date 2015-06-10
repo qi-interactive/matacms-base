@@ -42,7 +42,7 @@ class NotificationFilter extends Behavior {
 
 			$message = $event->getMessage();
 
-			if ($event->name == Controller::EVENT_MODEL_DELETED && 
+			if (!is_string($message) && $event->name == Controller::EVENT_MODEL_DELETED && 
 				$message->hasErrors()) {
 				$event->setLevel(MessageEvent::LEVEL_WARNING);
 				$event->data = $message->getTopError();
