@@ -19,7 +19,7 @@ Installation
 Changelog
 ---------
 
-## 1.1.2.1-alpha
+## 1.1.2.1-alpha, June 11, 2015
 - Bugfix for NotificationFilter
 
 ## 1.1.2-alpha
