@@ -19,6 +19,9 @@ Installation
 Changelog
 ---------
 
+## 1.1.2.1-alpha
+- Bugfix for NotificationFilter
+
 ## 1.1.2-alpha
 - Security fixes -- matacms\controllers\module\Controller was overwritting behaviors
 - Added dependency on mata/mata-framework : ~1.1.0-alpha
