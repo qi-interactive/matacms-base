@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -31,15 +31,15 @@ class ActiveField extends \yii\widgets\ActiveField {
     public function init() {
         Event::trigger(self::className(), self::EVENT_INIT_DONE, new MessageEvent($this));
     }
-    
+
     public function render($content = null) {
         if($this->model instanceof \mata\db\ActiveRecord) {
-            if (Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getIdNoPk()) !== false && 
+            if (Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getIdNoPk()) !== false &&
                 Setting::findValue($this->model->getDocumentId($this->attribute, self::SETTING_SHOW_FIELD)->getId()) !== false)
                 return parent::render();
 
             return "";
-        }       
+        }
 
         return parent::render();
     }
@@ -73,7 +73,7 @@ class ActiveField extends \yii\widgets\ActiveField {
         return $this;
     }
 
-    public function adjustLabelFor($options) 
+    public function adjustLabelFor($options)
     {
         if (isset($options['id']) && !isset($this->labelOptions['for'])) {
             $this->labelOptions['for'] = $options['id'];
@@ -109,20 +109,20 @@ class ActiveField extends \yii\widgets\ActiveField {
         return $this;
     }
 
-    public function selectize($options = []) 
+    public function selectize($options = [])
     {
         $this->parts['{input}'] = Selectize::widget($options);
         return $this;
     }
 
-    public function media($options = []) 
+    public function media($options = [])
     {
         if(isset($this->options['class'])) {
             $this->options['class'] .= ' partial-max-width-item field-media';
         } else {
             $this->options['class'] = 'partial-max-width-item field-media';
         }
-        
+
         $this->parts['{input}'] = \mata\widgets\fineuploader\FineUploader::widget([
             'model' => $this->model,
             'attribute' => $this->attribute,
@@ -162,7 +162,7 @@ class ActiveField extends \yii\widgets\ActiveField {
             $prompt = $options['prompt'];
             unset($options['prompt']);
         }
-        
+
         if(isset($this->options['class'])) {
             $this->options['class'] .= ' multi-choice-dropdown partial-max-width-item';
         }
@@ -181,7 +181,7 @@ class ActiveField extends \yii\widgets\ActiveField {
         return $this;
     }
 
-    public function slug($fieldName, $options = []) 
+    public function slug($fieldName, $options = [])
     {
         if(isset($this->options['class'])) {
             $this->options['class'] .= ' partial-max-width-item';
@@ -237,6 +237,26 @@ class ActiveField extends \yii\widgets\ActiveField {
         $this->parts['{input}'] = Selectize::widget($options);
 
         return $this;
+    }
+
+    public function hint($content, $options = [])
+    {
+        if(!empty($content)) {
+            $options = array_merge($this->hintOptions, $options);
+            $options['data-toggle'] = 'tooltip';
+            $options['data-placement'] = 'auto';
+            $options['title'] = $content;
+            $this->parts['{hint}'] = \yii\helpers\Html::tag('div', '', $options);
+
+            $view = $this->form->getView();
+            $js = "$(\"[data-toggle='tooltip']\").tooltip({trigger:'click | hover', html: true, placement: 'bottom'});";
+            $view->registerJs($js);
+            return $this;
+        }
+        else {
+            $this->parts['{hint}'] = null;
+        }
+
     }
 
 }

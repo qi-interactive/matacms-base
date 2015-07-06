@@ -10,7 +10,7 @@ MATA CMS Base application is the core of MATA CMS built on top of MATA Framework
 Installation
 ------------
 
-- Add the application using composer: 
+- Add the application using composer:
 
 ```json
 "matacms/matacms-base": "~1.0.0"
@@ -18,6 +18,9 @@ Installation
 
 Changelog
 ---------
+
+## 1.1.2.2-alpha, July 6, 2015
+- Added customized ActiveField hint with tooltip
 
 ## 1.1.2.1-alpha, June 11, 2015
 - Bugfix for NotificationFilter
@@ -47,7 +50,7 @@ Changelog
 
 ## 1.0.7-alpha, May 26, 2015
 
-- Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection 
+- Added EVENT_BEFORE_PREPARE_STATEMENT, allowing condition injection
 - ActiveQuery extends \mata\db\ActiveQuery
 - Added dependency on mata/mata-framework : ~1.0.3-alpha which introduced \mata\db\ActiveQuery
 
