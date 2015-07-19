@@ -25,7 +25,7 @@
         "mata/mata-framework":"~1.1.0-alpha",
         "yiidoc/yii2-selectize": "*",
         "mata/mata-rbac": "*",
-        "matacms/matacms-environment": "~1.0.2-alpha"
+        "matacms/matacms-environment": "dev-development"
     },
     "config": {
         "process-timeout": 1800
