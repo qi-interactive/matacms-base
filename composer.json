@@ -8,7 +8,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "mata/mata-user": "~1.0.0-alpha",
+        "matacms/matacms-user": "dev-development",
         "mata/mata-module-menu" : "~1.0.0-alpha",
         "mata/mata-form": "~1.0.0-alpha",
         "mata/mata-media": "~1.0.0-alpha",
