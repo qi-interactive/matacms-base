@@ -8,12 +8,12 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "matacms/matacms-user": "~1.0-alpha",
         "mata/mata-module-menu" : "~1.0.0-alpha",
         "mata/mata-form": "~1.0.0-alpha",
         "mata/mata-media": "~1.0.0-alpha",
         "mata/mata-category": "~1.0.0-alpha",
         "mata/mata-tag": "~1.0.0-alpha",
+        "matacms/matacms-user": "~1.0-alpha",
         "matacms/matacms-form": "~1.0.0-alpha",
         "matacms/matacms-settings": "~1.0.0-alpha",
         "matacms/matacms-cache": "~1.0.0-alpha",
@@ -22,10 +22,9 @@
         "matacms/matacms-post": "~1.0.0-alpha",
         "matacms/matacms-carousel": "~1.0.0-alpha",
         "matacms/matacms-person":"~1.0.0-alpha",
+        "matacms/matacms-environment": "~1.0-alpha",
         "mata/mata-framework":"~1.1.0-alpha",
-        "yiidoc/yii2-selectize": "*",
-        "mata/mata-rbac": "*",
-        "matacms/matacms-environment": "~1.0-alpha"
+        "yiidoc/yii2-selectize": "*"
     },
     "config": {
         "process-timeout": 1800

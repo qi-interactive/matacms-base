@@ -19,6 +19,9 @@ Installation
 Changelog
 ---------
 
+## 1.1.3.1-alpha, July 20, 2015
+- Composer.json updates
+
 ## 1.1.3-alpha, July 20, 2015
 - Added dependency on matacms/matacms-user
 
