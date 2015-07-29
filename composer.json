@@ -8,7 +8,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "mata/mata-user": "~1.0.0-alpha",
+        "mata/mata-user": "dev-forgotten-password-fix-based-on-1.0.2.1-alpha",
         "mata/mata-module-menu" : "~1.0.0-alpha",
         "mata/mata-form": "~1.0.0-alpha",
         "mata/mata-media": "~1.0.0-alpha",
@@ -18,7 +18,7 @@
         "matacms/matacms-settings": "~1.0.0-alpha",
         "matacms/matacms-cache": "~1.0.0-alpha",
         "matacms/matacms-content-block": "~1.0.0-alpha",
-        "matacms/matacms-simple-theme": "~1.0.0-alpha",
+        "matacms/matacms-simple-theme": "dev-forgotten-password-fix-based-on-1.0.8.4-alpha",
         "matacms/matacms-post": "~1.0.0-alpha",
         "matacms/matacms-carousel": "~1.0.0-alpha",
         "matacms/matacms-person":"~1.0.0-alpha",
