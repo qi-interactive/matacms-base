@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -24,11 +24,4 @@ class SiteController extends AuthenticatedController {
         return $this->render("welcome");
     }
 
-    public function actions() {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
 }

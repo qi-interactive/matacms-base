@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -138,6 +138,13 @@ class Html extends \yii\helpers\Html {
 	                $attrs['value'] = (string) $selectedValue;
 	                $attrs['selected'] = true;
         			$text = $encode ? static::encode($selectedValue) : $selectedValue;
+
+                    /**
+                     * Support for multiple selection drop dropDownList
+                     */
+                    if (is_array($item))
+                        $item = current($item);
+
         			$lines[] = static::tag('option', $item, $attrs);
         		}
         	}
@@ -163,7 +170,7 @@ class Html extends \yii\helpers\Html {
 		                }
 		                $lines[] = static::tag('option', $text, $attrs);
 	            	}
-	                
+
 	            }
 	        }
 
@@ -209,18 +216,18 @@ class Html extends \yii\helpers\Html {
 
 		$formId = $options['formId'];
 
-		\Yii::$app->view->registerJs("			
+		\Yii::$app->view->registerJs("
 			var form = $('#$formId'),
 			isSubmitted = false;
-	
+
 			form.on('submit', function(e) {
 				if(!isSubmitted) {
 					isSubmitted = form.yiiActiveForm('submitForm');
 					return isSubmitted;
-				}	
+				}
 				$('#$containerId button').attr('disabled', 'disabled');
-				return false;			
-			}); 
+				return false;
+			});
 		", View::POS_READY);
 
         return $retVal;
