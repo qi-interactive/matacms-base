@@ -86,6 +86,13 @@ class ActiveField extends \yii\widgets\ActiveField {
           'class' => 'form-control',
           ], $options);
 
+		if(isset($this->options['class'])) {
+		  if(strpos($this->options['class'], 'full-width-item') == false)
+		      $this->options['class'] .= ' partial-max-width-item';
+		} else {
+		  $this->options['class'] = 'partial-max-width-item';
+		}
+
         $clientOptions = isset($options["clientOptions"]) ? $options["clientOptions"] : [];
 
         $attribute = $this->attribute;
