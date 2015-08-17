@@ -26,6 +26,24 @@
         "mata/mata-framework":"~1.1.0-alpha",
         "yiidoc/yii2-selectize": "*"
     },
+    "require-dev": {
+        "matacms/matacms-user": "dev-development",
+        "mata/mata-module-menu" : "dev-development",
+        "mata/mata-form": "dev-development",
+        "mata/mata-media": "dev-development",
+        "mata/mata-category": "dev-development",
+        "mata/mata-tag": "dev-development",
+        "matacms/matacms-form": "dev-development",
+        "matacms/matacms-settings": "dev-development",
+        "matacms/matacms-cache": "dev-development",
+        "matacms/matacms-content-block": "dev-development",
+        "matacms/matacms-simple-theme": "dev-development",
+        "matacms/matacms-post": "dev-development",
+        "matacms/matacms-carousel": "dev-development",
+        "matacms/matacms-person":"dev-development",
+        "matacms/matacms-environment": "dev-developmenta",
+        "mata/mata-framework":"dev-development"
+    },
     "config": {
         "process-timeout": 1800
     },
