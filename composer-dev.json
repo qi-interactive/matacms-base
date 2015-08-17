@@ -1,0 +1,37 @@
+{
+    "name": "matacms/matacms-base",
+    "description": "MATA CMS Base",
+    "keywords": ["mata", "framework", "mata cms", "base"],
+    "homepage": "http://www.qi-interactive.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "matacms/matacms-user": "dev-development",
+        "mata/mata-module-menu" : "dev-development",
+        "mata/mata-form": "dev-development",
+        "mata/mata-media": "dev-development",
+        "mata/mata-category": "dev-development",
+        "mata/mata-tag": "dev-development",
+        "matacms/matacms-form": "dev-development",
+        "matacms/matacms-settings": "dev-development",
+        "matacms/matacms-cache": "dev-development",
+        "matacms/matacms-content-block": "dev-development",
+        "matacms/matacms-simple-theme": "dev-development",
+        "matacms/matacms-post": "dev-development",
+        "matacms/matacms-carousel": "dev-development",
+        "matacms/matacms-person":"dev-development",
+        "matacms/matacms-environment": "dev-development",
+        "mata/mata-framework":"dev-development",
+        "yiidoc/yii2-selectize": "*"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "autoload": {
+        "psr-4": {
+            "matacms\\": ""
+        }
+    }
+}
