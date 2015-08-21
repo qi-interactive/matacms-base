@@ -19,6 +19,14 @@ Installation
 Changelog
 ---------
 
+## 1.1.4-alpha, August 21, 2015
+
+- Added error page
+- Added module acccess control
+- Added support for multiple selection in dropDownList
+- Added support for multiple notifications with same key
+- Small updates
+
 ## 1.1.3.3-alpha, July 20, 2015
 - Composer.json updates
 
