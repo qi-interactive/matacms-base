@@ -47,9 +47,12 @@ abstract class AuthenticatedController extends \yii\web\Controller {
 						'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             $menuModules = ArrayHelper::getColumn(\Yii::$app->moduleMenuManager->getMenuModules(), 'ModuleId');
+
+                            $hasAccess = in_array($action->controller->module->id, $menuModules);
+
                     		$modulesAccessibleForUser = ArrayHelper::getColumn(\Yii::$app->moduleAccessibilityManager->getModulesByUser(Yii::$app->user->getId()), 'ModuleId');
 
-                            $hasAccess = in_array($action->controller->module->id, $menuModules) && in_array($action->controller->module->id, $modulesAccessibleForUser);
+                            $hasAccess = \Yii::$app->user->identity->getIsAdmin() || in_array($action->controller->module->id, $modulesAccessibleForUser);
 
                             return $hasAccess;
                         },
@@ -61,9 +64,12 @@ abstract class AuthenticatedController extends \yii\web\Controller {
 						'allow' => false,
                         'matchCallback' => function ($rule, $action) {
                             $menuModules = ArrayHelper::getColumn(\Yii::$app->moduleMenuManager->getMenuModules(), 'ModuleId');
+
+                            $hasAccess = in_array($action->controller->module->id, $menuModules);
+
                     		$modulesAccessibleForUser = ArrayHelper::getColumn(\Yii::$app->moduleAccessibilityManager->getModulesByUser(Yii::$app->user->getId()), 'ModuleId');
 
-                            $hasAccess = in_array($action->controller->module->id, $menuModules) && in_array($action->controller->module->id, $modulesAccessibleForUser);
+                            $hasAccess = \Yii::$app->user->identity->getIsAdmin() || in_array($action->controller->module->id, $modulesAccessibleForUser);
 
                             return !$hasAccess;
                         },

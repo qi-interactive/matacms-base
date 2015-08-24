@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.4.1-alpha, August 23, 2015
+
+- Updated module acccess control
+
 ## 1.1.4-alpha, August 21, 2015
 
 - Added error page
