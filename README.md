@@ -19,6 +19,11 @@ Installation
 Changelog
 ---------
 
+
+## 1.1.4.2-alpha, August 25, 2015
+
+- Removed XML declarations
+
 ## 1.1.4.1-alpha, August 23, 2015
 
 - Updated module acccess control

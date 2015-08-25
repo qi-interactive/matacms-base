@@ -14,8 +14,7 @@ $environmentModule = \Yii::$app->getModule("environment");
 		?>
 	<li data-entity-pk="<?= \mata\helpers\ActiveRecordHelper::getPk($model) ?>"><?= $model->getLabel(); ?>
         <div class="svg-icon-container">
-            <?xml version="1.0" encoding="utf-8"?>
-            <!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             viewBox="0 0 21 16" enable-background="new 0 0 21 16" xml:space="preserve">
             <g class="rearrangeable-icon">
@@ -42,8 +41,8 @@ $environmentModule = \Yii::$app->getModule("environment");
     <?php if(!$environmentModule->hasEnvironmentBehavior($model)): ?>
         <div class="fadding-container"> </div>
     <?php endif; ?>
-    
-    <?php if($environmentModule->hasEnvironmentBehavior($model)): 
+
+    <?php if($environmentModule->hasEnvironmentBehavior($model)):
     $ie = ItemEnvironment::find()->where([
         "DocumentId" => $model->getDocumentId()->getId(),
         "Revision" => $model->_revision->Revision,
@@ -63,16 +62,16 @@ $environmentModule = \Yii::$app->getModule("environment");
     }
 
         ?>
-    <div class="small-list list-version-container <?= strtolower($evironmentClass) ?>"> 
+    <div class="small-list list-version-container <?= strtolower($evironmentClass) ?>">
         <div class="fadding-container"> </div>
         <div class="list-version-inner-container">
-            <div class="version-status">               
+            <div class="version-status">
                 <span><?= $status; ?></span>
             </div>
             <?php if ($delta > 0): ?>
                 <div class="revision-delta">
-                    <?= "+ " . $delta . " versions ahead"; 
-                    ?> 
+                    <?= "+ " . $delta . " versions ahead";
+                    ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -83,7 +82,7 @@ $environmentModule = \Yii::$app->getModule("environment");
 <?php endforeach; ?>
 </ol>
 
-<?php 
+<?php
 
 $csrf = \Yii::$app->request->getCsrfToken();
 $script = <<< JS
@@ -164,7 +163,3 @@ JS;
 $this->registerJs($script, View::POS_READY);
 
 ?>
-
-
-
-
