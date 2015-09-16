@@ -20,8 +20,9 @@ Changelog
 ---------
 
 
-## 1.1.4.2-alpha, August 25, 2015
+## 1.1.4.2-alpha, September 16, 2015
 
+- Removed non-essential modules (matacms-content-block, matacms-post, matacms-carousel, matacms-person)
 - Removed XML declarations
 
 ## 1.1.4.1-alpha, August 23, 2015
