@@ -170,6 +170,14 @@ class ActiveField extends \yii\widgets\ActiveField {
             unset($options['prompt']);
         }
 
+		if(isset($this->model)) {
+            $options['model'] = $this->model;
+        }
+
+        if(isset($this->attribute)) {
+            $options['attribute'] = $this->attribute;
+        }
+
         if(isset($this->options['class'])) {
             $this->options['class'] .= ' multi-choice-dropdown partial-max-width-item';
         }

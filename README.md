@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.4.4-alpha, September 22, 2015
+
+- Updated multiselect field type in ActiveField
+
 ## 1.1.4.3-alpha, September 16, 2015
 
 - Added \matacms\console\Application with option to disable specific modules from bootstrapping
