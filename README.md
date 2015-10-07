@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.4.5-alpha, October 7, 2015
+
+- Added support to overwrite views rendered via renderAjax
+
 ## 1.1.4.4-alpha, September 22, 2015
 
 - Updated multiselect field type in ActiveField

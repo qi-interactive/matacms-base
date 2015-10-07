@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -89,19 +89,44 @@ abstract class Controller extends AuthenticatedController {
 		}
 	}
 
+    public function renderAjax($view, $params = []) {
+
+		try {
+			return parent::renderAjax($view, $params);
+		} catch (\yii\base\InvalidParamException $e) {
+			// view not found using default Yii routing
+			return $this->renderAjaxMataCmsView($view, $params);
+		}
+	}
+
 	private function renderMataCMSView($view, $params) {
 
 		$moduleViewFile = Yii::$app->controller->module->getViewPath() . "/" . $this->id . "/" . $view;
 
 		if (file_exists($moduleViewFile . ".php")) {
-			$view = strpos($moduleViewFile, "vendor") > -1 ? 
-			"@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) : 
+			$view = strpos($moduleViewFile, "vendor") > -1 ?
+			"@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) :
 			"@" .  substr($moduleViewFile, stripos($moduleViewFile, "mata-cms"));
 		} else {
 			$view =  "@vendor/matacms/matacms-base/views/module/" . $view;
 		}
 
 		return parent::render($view, $params);
+	}
+
+    private function renderAjaxMataCmsView($view, $params) {
+
+		$moduleViewFile = Yii::$app->controller->module->getViewPath() . "/" . $this->id . "/" . $view;
+
+		if (file_exists($moduleViewFile . ".php")) {
+			$view = strpos($moduleViewFile, "vendor") > -1 ?
+			"@" . substr($moduleViewFile, stripos($moduleViewFile, "vendor")) :
+			"@" .  substr($moduleViewFile, stripos($moduleViewFile, "mata-cms"));
+		} else {
+			$view =  "@vendor/matacms/matacms-base/views/module/" . $view;
+		}
+
+		return parent::renderAjax($view, $params);
 	}
 
 	public function actionIndex() {
@@ -137,9 +162,9 @@ abstract class Controller extends AuthenticatedController {
 				$dataProvider->query->join('INNER JOIN', 'arhistory_revision', 'arhistory_revision.DocumentId = CONCAT(:class, '.$aliasWithPk.')', [':class' => $parentClass->name . '-']);
 	        	$dataProvider->query->andWhere('arhistory_revision.Revision = (SELECT MAX(Revision) FROM `arhistory_revision` WHERE arhistory_revision.`DocumentId` = CONCAT(:class, '.$aliasWithPk.'))', [':class' => $parentClass->name . '-']);
 	        	$dataProvider->query->orderBy('arhistory_revision.DateCreated DESC');
-			}	
+			}
 		}
-		 
+
 		$dataProvider->setSort($sort);
 
 		return $this->render("index", [
@@ -163,5 +188,5 @@ abstract class Controller extends AuthenticatedController {
 
 	protected abstract function getModel();
 	protected abstract function getSearchModel();
-	
+
 }
