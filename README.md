@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## TO BE RELEASED
+
+- Added language selector modal for module list view page (enabled only if model has LanguageBehavior)
+
 ## 1.1.4.5-alpha, October 7, 2015
 
 - Added support to overwrite views rendered via renderAjax
