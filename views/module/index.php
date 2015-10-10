@@ -32,14 +32,29 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
                         </div>
                     </div>
                 <?php endif; ?>
-
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                 <div class="elements">
-                    <?= Html::a(sprintf('Create %s', Yii::$app->controller->getModel()->getModelLabel()), ['create'], ['class' => 'btn btn-success']) ?>
+                    <?php
+
+                    $createLinkOptions = ['class' => 'btn btn-success btn-create'];
+                    $createURL = ['create'];
+
+                    if(\mata\helpers\BehaviorHelper::hasBehavior(Yii::$app->controller->getModel(), \matacms\language\behaviors\LanguageBehavior::class) && count(\Yii::$app->getModule('language')->getSupportedLanguages()) > 1) {
+                        $createLinkOptions = array_merge([
+                            'data-source' => '',
+                            'data-toggle' => 'modal',
+                            'data-target' => '#language-selector-modal'
+                            ], $createLinkOptions);
+
+                        $createURL = '#';
+                    }
+
+                    ?>
+                    <?= Html::a(sprintf('Create %s', Yii::$app->controller->getModel()->getModelLabel()), $createURL, $createLinkOptions) ?>
                 </div>
             </div>
-            <div class="search-container"> 
+            <div class="search-container">
                 <div class="search-input-container">
                     <input class="search-input" id="item-search" placeholder="Type to search" value="" name="search">
                     <div class="search-submit-btn"><input type="submit" value=""></div>
@@ -48,7 +63,7 @@ $isRearrangable = isset($this->context->actions()['rearrange']);
         </div>
     </div>
 </div>
-<?php 
+<?php
 
 $pjax = Pjax::begin([
    "timeout" => 10000,
@@ -97,17 +112,21 @@ echo ListView::widget([
     'itemSelector' => 'div[data-key]'
     ]
     ]
-    ]); 
+    ]);
 
 Pjax::end();
 ?>
 
-<?php 
+<?php
 if ($isRearrangable)
     echo $this->render('@vendor/matacms/matacms-base/views/module/_overlay');
+
+if(\mata\helpers\BehaviorHelper::hasBehavior(Yii::$app->controller->getModel(), \matacms\language\behaviors\LanguageBehavior::class) && count(\Yii::$app->getModule('language')->getSupportedLanguages()) > 1)
+    echo $this->render('@vendor/matacms/matacms-language/views/partials/_languageSelectorModal', ['createURL' => \yii\helpers\Url::to(['create'])]);
+
 ?>
 
-<?php 
+<?php
 
 if (count($searchModel->filterableAttributes()) > 0)
     $this->registerJs('
