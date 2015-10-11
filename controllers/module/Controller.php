@@ -143,7 +143,8 @@ abstract class Controller extends AuthenticatedController {
 			$dataProvider->query->orderBy = null;
 		} else {
 			if(BehaviorHelper::hasBehavior($searchModel, \mata\arhistory\behaviors\HistoryBehavior::class)) {
-				$dataProvider->query->select('*');
+
+				$dataProvider->query->select($dataProvider->query->select);
 				$reflection =  new \ReflectionClass($searchModel);
 				$parentClass = $reflection->getParentClass();
 
