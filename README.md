@@ -19,8 +19,9 @@ Installation
 Changelog
 ---------
 
-## TO BE RELEASED
+## 1.1.4.6-alpha, October 12, 2015
 
+- Updated selector for history behavior
 - Added language selector modal for module list view page (enabled only if model has LanguageBehavior)
 
 ## 1.1.4.5-alpha, October 7, 2015
