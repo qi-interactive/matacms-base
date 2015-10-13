@@ -13,13 +13,22 @@ $environmentModule = \Yii::$app->getModule("environment");
 <?php
 if(\mata\helpers\BehaviorHelper::hasBehavior(Yii::$app->controller->getModel(), \matacms\language\behaviors\LanguageBehavior::class) && count(\Yii::$app->getModule('language')->getSupportedLanguages()) > 1):
 ?>
-<div>
+<div class="language-versions" style="display:block;margin-left:10px;margin-bottom: 20px;">
 <?php
 $language = \Yii::$app->request->get('Language');
 foreach(\Yii::$app->getModule('language')->getSupportedLanguages() as $locale => $name):
-	$cssClass = $language && $language == $locale ? 'language-select selected' : 'language-select';
+	$cssClass = 'btn btn-primary';
+	$isSelected = ($language && $language == $locale);
+	if($isSelected) {
+		$cssClass = 'btn btn-warning';
+		$selectedLanguage = $locale;
+		$languageURL = 'javascript:void(0)';
+	}
+	else {
+		$languageURL = ['rearrangeable', 'Language' => $locale];
+	}
 ?>
-	<?= Html::a($name, ['rearrangeable', 'Language' => $locale], ['class' => $cssClass, 'data-url' => \yii\helpers\Url::to(['rearrangeable', 'Language' => $locale])]) ?>
+	<?= Html::a($name, $languageURL, ['class' => $cssClass, 'data-url' => \yii\helpers\Url::to(['rearrangeable', 'Language' => $locale]), 'disabled' => $isSelected, 'style' => 'margin-right:5px;']) ?>
 <?php endforeach; ?>
 </div>
 <?php endif; ?>
@@ -182,8 +191,11 @@ if(\mata\helpers\BehaviorHelper::hasBehavior(Yii::$app->controller->getModel(), 
 
 $this->registerJs("
 
-	$('a.language-select').on('click', function(){
-		mata.simpleTheme.reloadRearrangeData($(this).attr('data-url'));
+	$('.language-versions a.btn').on('click', function(){
+		if(!$(this).attr('disabled')) {
+			mata.simpleTheme.reloadRearrangeData($(this).attr('data-url'));
+		}
+
 		return false;
 	});
 

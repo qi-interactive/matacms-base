@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.4.7.1-alpha, October 13, 2015
+
+- Updated multi lingual rearranging
+
 ## 1.1.4.7-alpha, October 13, 2015
 
 - Added support for multi lingual rearranging
