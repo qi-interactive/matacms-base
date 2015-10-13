@@ -1,6 +1,7 @@
 <?php
-use yii\web\View;
 
+use yii\web\View;
+use yii\helpers\Html;
 use matacms\environment\models\ItemEnvironment;
 
 $environmentModule = \Yii::$app->getModule("environment");
@@ -8,6 +9,21 @@ $environmentModule = \Yii::$app->getModule("environment");
 ?>
 
 <h3>Rearrange <?= \Yii::$app->controller->id ?></h3>
+
+<?php
+if(\mata\helpers\BehaviorHelper::hasBehavior(Yii::$app->controller->getModel(), \matacms\language\behaviors\LanguageBehavior::class) && count(\Yii::$app->getModule('language')->getSupportedLanguages()) > 1):
+?>
+<div>
+<?php
+$language = \Yii::$app->request->get('Language');
+foreach(\Yii::$app->getModule('language')->getSupportedLanguages() as $locale => $name):
+	$cssClass = $language && $language == $locale ? 'language-select selected' : 'language-select';
+?>
+	<?= Html::a($name, ['rearrangeable', 'Language' => $locale], ['class' => $cssClass, 'data-url' => \yii\helpers\Url::to(['rearrangeable', 'Language' => $locale])]) ?>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>
+
 <ol class="smooth-sortable overlay-list-container" data-rearrange-action-url="<?= $rearrangeActionUrl ?>">
 	<?php
 	foreach($dataProvider->models as $model):
@@ -162,4 +178,16 @@ JS;
 
 $this->registerJs($script, View::POS_READY);
 
+if(\mata\helpers\BehaviorHelper::hasBehavior(Yii::$app->controller->getModel(), \matacms\language\behaviors\LanguageBehavior::class) && count(\Yii::$app->getModule('language')->getSupportedLanguages()) > 1):
+
+$this->registerJs("
+
+	$('a.language-select').on('click', function(){
+		mata.simpleTheme.reloadRearrangeData($(this).attr('data-url'));
+		return false;
+	});
+
+", View::POS_READY);
+
+endif;
 ?>
