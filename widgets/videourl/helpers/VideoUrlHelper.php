@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -11,10 +11,10 @@ namespace matacms\widgets\videourl\helpers;
 use yii\helpers\Json;
 use yii\helpers\Html;
 
-class VideoUrlHelper 
+class VideoUrlHelper
 {
 
-	public static function getVideoServiceProvider($videoUrl) 
+	public static function getVideoServiceProvider($videoUrl)
     {
         $url = preg_replace('#\#.*$#', '', trim($videoUrl));
         $services_regexp = [
@@ -31,7 +31,7 @@ class VideoUrlHelper
         return false;
     }
 
-    public static function getVideoId($videoUrl) 
+    public static function getVideoId($videoUrl)
     {
         $url = preg_replace('#\#.*$#', '', trim($videoUrl));
         $services_regexp = [
@@ -48,7 +48,7 @@ class VideoUrlHelper
         return false;
     }
 
-    public static function renderVideoPlayer($videoUrl, $options = []) 
+    public static function renderVideoPlayer($videoUrl, $options = [])
     {
         $videoProvider = self::getVideoServiceProvider($videoUrl);
         $videoId = self::getVideoId($videoUrl);
@@ -80,7 +80,6 @@ class VideoUrlHelper
         if (!is_array($sources))
             $sources = [$sources];
 
-
         $sourcesHtml = "";
 
         foreach ($sources as $source)
@@ -92,7 +91,7 @@ class VideoUrlHelper
         return Html::tag("video", $sourcesHtml, $options);
     }
 
-    public static function getPicture($videoUrl) 
+    public static function getPicture($videoUrl)
     {
         $videoProvider = self::getVideoServiceProvider($videoUrl);
         $videoId = self::getVideoId($videoUrl);
@@ -101,7 +100,7 @@ class VideoUrlHelper
 
         switch($videoProvider) {
             case 'vimeo':
-                $videoImage = self::vimeoApi($videoId, "thumbnail_medium");
+                $videoImage = self::vimeoApi($videoId, "thumbnail_url");
                 break;
             case 'youtube':
                 $videoImage = self::youtubeApi($videoId);
@@ -113,19 +112,19 @@ class VideoUrlHelper
         return $videoImage;
     }
 
-    public static function vimeoApi($videoId, $property) 
+    public static function vimeoApi($videoId, $property)
     {
-        $contents = @file_get_contents('https://vimeo.com/api/v2/video/' . $videoId . '.json');
+		$contents = @file_get_contents('https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/' . $videoId);
         if(!$contents)
             return false;
         $contents = Json::decode($contents, false);
 
-        return $contents[0]->$property;
+        return $contents->$property;
     }
 
-    public static function youtubeApi($videoId) 
+    public static function youtubeApi($videoId)
     {
         return 'https://img.youtube.com/vi/' . $videoId . '/0.jpg';
     }
-    
+
 }

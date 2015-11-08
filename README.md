@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.4.9-alpha, November 8, 2015
+
+- Changed usage of deprecated Vimeo API to oEmbed
+
 ## 1.1.4.8-alpha, October 13, 2015
 
 - Updated multi lingual rearranging
