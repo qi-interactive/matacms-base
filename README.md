@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5-alpha, November 30, 2015
+
+- Bug fix for \matacms\console\Application
+
 ## 1.1.4.9-alpha, November 8, 2015
 
 - Changed usage of deprecated Vimeo API to oEmbed

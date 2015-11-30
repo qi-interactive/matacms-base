@@ -12,6 +12,7 @@ use mata\modulemenu\models\Module as ModuleModel;
 use mata\helpers\MataModuleHelper;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\base\BootstrapInterface;
 use Yii;
 
 class Application extends \yii\console\Application {
