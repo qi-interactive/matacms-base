@@ -17,6 +17,8 @@ use matacms\base\MessageEvent;
 use yii\filters\AccessControl;
 use matacms\controllers\base\AuthenticatedController;
 use yii\data\Sort;
+use mata\db\ActiveQuery;
+use yii\base\Event;
 
 abstract class Controller extends AuthenticatedController {
 
@@ -134,6 +136,8 @@ abstract class Controller extends AuthenticatedController {
 		$searchModel = $this->getSearchModel();
 		$searchModel = new $searchModel();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+		Event::trigger(ActiveQuery::class, ActiveQuery::EVENT_BEFORE_PREPARE_STATEMENT_FOR_SEARCH, new MessageEvent($dataProvider->query));
 
 		$sort = new Sort([
 			'attributes' => $searchModel->filterableAttributes()

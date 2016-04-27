@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.1-alpha, April 27, 2016
+
+- Added trigger of ActiveQuery::EVENT_BEFORE_PREPARE_STATEMENT_FOR_SEARCH in actionIndex (matacms\controllers\module\Controller) (event consumed by matacms-language module)
+
 ## 1.1.5-alpha, November 30, 2015
 
 - Bug fix for \matacms\console\Application
