@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.2-alpha, April 28, 2016
+
+- Updated composer.json for matacms/matacms-simple-theme version
+
 ## 1.1.5.1-alpha, April 27, 2016
 
 - Added trigger of ActiveQuery::EVENT_BEFORE_PREPARE_STATEMENT_FOR_SEARCH in actionIndex (matacms\controllers\module\Controller) (event consumed by matacms-language module)
