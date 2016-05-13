@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 
 use matacms\theme\simple\assets\ListAsset;
+use matacms\helpers\DateHelper;
 
 ListAsset::register($this);
 
@@ -10,23 +11,23 @@ $moduleBaseUrl = sprintf("/mata-cms/%s/%s", $this->context->module->id, $this->c
 
 $module = \Yii::$app->getModule("environment");
 
-?> 
+?>
 
 <div class="list-container row <?= empty($model->filterableAttributes()) ? 'simple-list-container' : ''; ?>">
-	<?php if ($uri = $model->getVisualRepresentation()) { 
+	<?php if ($uri = $model->getVisualRepresentation()) {
 		$thumbnailActiveClass = "thumbnail-active";
 		?>
 
 		<div class="list-thumbnail"><div class="list-thumbnail-img" style="background-image: url(<?=$uri ?>)"></div></div>
 
 		<!-- <div class="list-contents-container thumbnail-active"> -->
-		<?php } else { 
+		<?php } else {
 			$thumbnailActiveClass = " ";
 		} ?>
 		<a href='<?= sprintf("%s/update?id=%d", $moduleBaseUrl, $model->primaryKey );?>' class="list-link">
 			<div class="list-contents-container <?= $thumbnailActiveClass ?>">
-				<div class="list-label"> 
-			
+				<div class="list-label">
+
 					<?php if ($module->hasEnvironmentBehavior($model) && $model->hasLiveVersion()): ?>
 						<?php
 						$eventDateAttribute = $model->getEventDateAttribute();
@@ -34,17 +35,17 @@ $module = \Yii::$app->getModule("environment");
 						$evironmentClass = !$isLive ? 'live' : 'scheduled';
 						$delta = $model->getRevisionDelta();
 						?>
-						<div class="list-version-container <?= $evironmentClass ?>"> 
+						<div class="list-version-container <?= $evironmentClass ?>">
 							<div class="fadding-container"> </div>
 							<div class="list-version-inner-container">
-								<div class="version-status"> 
+								<div class="version-status">
 								<?= $isLive ? 'SCHEDULED' : Yii::$app->getModule("environment")->getLiveEnvironment(); ?>
 								</div>
 
 								<?php if ($delta > 0): ?>
 									<div class="revision-delta">
-										<?= "+ " . $delta . " versions ahead"; 
-										?> 
+										<?= "+ " . $delta . " versions ahead";
+										?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -71,13 +72,14 @@ $module = \Yii::$app->getModule("environment");
 						}
 
 						foreach ($model->filterableAttributes() as $attribute):
+							$attribute = DateHelper::isDateType($model, $attribute) ? "Local" . $attribute : $attribute;
+
 							?>
 
 						<div class="<?= $columnsClass?> columns">
-							<span class="label"><?= $attribute.': '?></span><?= $model->$attribute?> <div class="fadding-container"> </div>
+							<span class="label"><?= $model->getAttributeLabel($attribute) . ': '?></span><?= $model->$attribute?> <div class="fadding-container"> </div>
 						</div>
-					<?php endforeach;
-					?>
+					<?php endforeach; ?>
 
 				</div>
 			</div>
@@ -90,7 +92,3 @@ $module = \Yii::$app->getModule("environment");
 			}
 			?>></a>
 	</div>
-
-
-
-

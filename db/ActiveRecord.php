@@ -22,7 +22,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
     /**
      * This needs to be defined in the base class, otherwise __get will not access the property.
-     */ 
+     */
     private $_related = [];
 
     public function behaviors() {
@@ -30,6 +30,30 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
             HistoryBehavior::className(),
             EnvironmentBehavior::className()
         ];
+    }
+
+	public function __get($name) {
+	    if (!\Yii::$app->user->isGuest && \yii\helpers\StringHelper::startsWith($name, 'Local'))
+			return \matacms\helpers\DateHelper::toLocalTime($this->getAttribute(\yii\helpers\StringHelper::byteSubstr($name, strlen('Local'))), \Yii::$app->user->identity->getOffsetFromUTC());
+
+		return parent::__get($name);
+	}
+
+	public function __set($name, $value)
+    {
+		if (!\Yii::$app->user->isGuest && \yii\helpers\StringHelper::startsWith($name, 'Local')) {
+			$originName = \yii\helpers\StringHelper::byteSubstr($name, strlen('Local'));
+
+			if ($this->hasAttribute($originName)) {
+	            $this->setAttribute($originName, \matacms\helpers\DateHelper::toUTCTime($value, \Yii::$app->user->identity->getOffsetFromUTC()));
+	        }
+			else {
+				parent::__set($name, $value);
+			}
+		}
+		else {
+			parent::__set($name, $value);
+		}
     }
 
     public static function find() {
@@ -56,7 +80,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
         return static::tableName();
     }
 
-    // WHAT IS THIS FUNCTION? How is it different from attributeLabels()? 
+    // WHAT IS THIS FUNCTION? How is it different from attributeLabels()?
     public function getAttributeLabels($attribute = null) {
         if($this->attributeLabels == null)
             $this->attributeLabels = $this->attributeLabels();
@@ -110,7 +134,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
     public function filterableAttributes() {
         return [];
-    } 
+    }
 
     public function getVisualRepresentation() {
 

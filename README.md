@@ -19,6 +19,11 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.3-alpha, May 13, 2016
+
+- Added DateHelper for setting datetimes into user local time
+- Added magic getter for setting user local time  and setter for setting local time to UTC
+
 ## 1.1.5.2-alpha, April 28, 2016
 
 - Updated composer.json for matacms/matacms-simple-theme version
