@@ -33,7 +33,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
     }
 
 	public function __get($name) {
-	    if (!\Yii::$app->user->isGuest && \yii\helpers\StringHelper::startsWith($name, 'Local'))
+	    if (!is_a(\Yii::$app, "yii\console\Application") && !\Yii::$app->user->isGuest && \yii\helpers\StringHelper::startsWith($name, 'Local'))
 			return \matacms\helpers\DateHelper::toLocalTime($this->getAttribute(\yii\helpers\StringHelper::byteSubstr($name, strlen('Local'))), \Yii::$app->user->identity->getOffsetFromUTC());
 
 		return parent::__get($name);
@@ -41,7 +41,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
 	public function __set($name, $value)
     {
-		if (!\Yii::$app->user->isGuest && \yii\helpers\StringHelper::startsWith($name, 'Local')) {
+		if (!is_a(\Yii::$app, "yii\console\Application") && !\Yii::$app->user->isGuest && \yii\helpers\StringHelper::startsWith($name, 'Local')) {
 			$originName = \yii\helpers\StringHelper::byteSubstr($name, strlen('Local'));
 
 			if ($this->hasAttribute($originName)) {

@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.4-alpha, May 16, 2016
+
+- Bug fix
+
 ## 1.1.5.3-alpha, May 13, 2016
 
 - Added DateHelper for setting datetimes into user local time
