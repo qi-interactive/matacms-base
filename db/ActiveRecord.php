@@ -9,7 +9,6 @@
 namespace matacms\db;
 
 use mata\arhistory\behaviors\HistoryBehavior;
-use matacms\environment\behaviors\EnvironmentBehavior;
 use yii\base\InvalidConfigException;
 use yii\helpers\Inflector;
 use mata\media\models\Media;
@@ -27,8 +26,7 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
     public function behaviors() {
         return [
-            HistoryBehavior::className(),
-            EnvironmentBehavior::className()
+            HistoryBehavior::className()
         ];
     }
 

@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.5-alpha, September 16, 2016
+
+- Removed matacms\environment\behaviors\EnvironmentBehavior from matacms\db\ActiveRecord
+
 ## 1.1.5.4-alpha, May 16, 2016
 
 - Bug fix
