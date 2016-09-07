@@ -44,10 +44,10 @@ class Application extends \mata\web\Application {
 	    \Yii::setAlias('@webroot', dirname($request->getScriptFile())  . DIRECTORY_SEPARATOR . "web");
 	    \Yii::setAlias('@web', $request->getBaseUrl() . "/web");
 
-        if ($this->extensions === null) {
-            $file = Yii::getAlias('@vendor/yiisoft/extensions.php');
-            $this->extensions = is_file($file) ? include($file) : [];
-        }
+        $file = Yii::getAlias('@vendor/yiisoft/extensions.php');
+        $vendorExtensions = is_file($file) ? include($file) : [];
+
+        $this->extensions = $this->extensions === null ? $vendorExtensions : array_merge($this->extensions, $vendorExtensions);
 
         foreach ($this->extensions as $extension) {
             if (!empty($extension['alias'])) {

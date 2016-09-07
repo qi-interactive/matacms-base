@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.6-alpha, September 7, 2016
+
+- Updated matacms\web\Application: merging extensions defined in config file with /vendor/yiisoft/extensions.php
+
 ## 1.1.5.5-alpha, September 2, 2016
 
 - Removed matacms\environment\behaviors\EnvironmentBehavior from matacms\db\ActiveRecord
