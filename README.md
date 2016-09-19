@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.7-alpha, September 19, 2016
+
+- Updated matacms\controllers\base\AuthenticatedController
+
 ## 1.1.5.6-alpha, September 7, 2016
 
 - Updated matacms\web\Application and matacms\console\Application: merging extensions defined in config file with /vendor/yiisoft/extensions.php

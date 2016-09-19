@@ -46,7 +46,7 @@ abstract class AuthenticatedController extends \yii\web\Controller {
                     [
 						'allow' => true,
                         'matchCallback' => function ($rule, $action) {
-                            $menuModules = ArrayHelper::getColumn(\Yii::$app->moduleMenuManager->getMenuModules(), 'ModuleId');
+                            $menuModules = ArrayHelper::getColumn(\Yii::$app->moduleAccessibilityManager->getAvailableModules(), 'ModuleId');
 
                             $hasAccess = in_array($action->controller->module->id, $menuModules);
 
@@ -63,7 +63,7 @@ abstract class AuthenticatedController extends \yii\web\Controller {
                     [
 						'allow' => false,
                         'matchCallback' => function ($rule, $action) {
-                            $menuModules = ArrayHelper::getColumn(\Yii::$app->moduleMenuManager->getMenuModules(), 'ModuleId');
+                            $menuModules = ArrayHelper::getColumn(\Yii::$app->moduleAccessibilityManager->getAvailableModules(), 'ModuleId');
 
                             $hasAccess = in_array($action->controller->module->id, $menuModules);
 
