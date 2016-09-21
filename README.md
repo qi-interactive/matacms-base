@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.8-alpha, September 21, 2016
+
+- Updated matacms\controllers\base\AuthenticatedController
+
 ## 1.1.5.7-alpha, September 19, 2016
 
 - Updated matacms\controllers\base\AuthenticatedController
