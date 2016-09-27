@@ -24,7 +24,7 @@ $module = \Yii::$app->getModule("environment");
 		<?php } else {
 			$thumbnailActiveClass = " ";
 		} ?>
-		<a href='<?= sprintf("%s/update?id=%d", $moduleBaseUrl, $model->primaryKey );?>' class="list-link">
+		<a href='<?= sprintf("%s/update?id=%d", $moduleBaseUrl, $model->primaryKey );?>' class="list-link" data-pjax="0">
 			<div class="list-contents-container <?= $thumbnailActiveClass ?>">
 				<div class="list-label">
 

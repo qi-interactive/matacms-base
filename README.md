@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.5.9-alpha, September 27, 2016
+
+- Disabled pjax on module index list view items links
+
 ## 1.1.5.8-alpha, September 21, 2016
 
 - Updated matacms\controllers\base\AuthenticatedController
