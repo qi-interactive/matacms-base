@@ -75,9 +75,7 @@ class ActiveField extends \yii\widgets\ActiveField {
 
     public function adjustLabelFor($options)
     {
-        if (isset($options['id']) && !isset($this->labelOptions['for'])) {
-            $this->labelOptions['for'] = $options['id'];
-        }
+		parent::adjustLabelFor($options);
     }
 
     public function dateTime($options = [])

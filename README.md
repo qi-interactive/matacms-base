@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.1.6.0-alpha, September 28, 2016
+
+- Updated matacms\widgets\ActiveField
+
 ## 1.1.5.9-alpha, September 27, 2016
 
 - Disabled pjax on module index list view items links
