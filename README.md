@@ -19,7 +19,7 @@ Installation
 Changelog
 ---------
 
-## 1.1.6.1-alpha, September 28, 2016
+## 1.1.6.1-alpha, October 25, 2016
 
 - Updated matacms\widgets\ActiveField: dateTime field accepts 'minDate' option (if set to false, there is no minDate for date time picker)
 
