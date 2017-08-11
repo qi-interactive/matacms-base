@@ -81,7 +81,7 @@ class Application extends \mata\web\Application {
                 $component = Yii::createObject($class);
             }
 
-            if ($component instanceof BootstrapInterface) {
+            if ($component instanceof \yii\base\BootstrapInterface) {
                 Yii::trace("Bootstrap with " . get_class($component) . '::bootstrap()', __METHOD__);
                 $component->bootstrap($this);
             } else {
