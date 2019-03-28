@@ -91,6 +91,8 @@ class Application extends \mata\web\Application
                 Yii::trace("Bootstrap with " . get_class($component), __METHOD__);
             }
         }
+        
+        parent::bootstrap();
 
     }
 
