@@ -8,20 +8,23 @@
 
 namespace matacms\web;
 
-use mata\modulemenu\models\Module as ModuleModel;
-use mata\helpers\MataModuleHelper;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
 use Yii;
+use yii\helpers\ArrayHelper;
 
-class Application extends \mata\web\Application {
-
+class Application extends \mata\web\Application
+{
     public $disabledModulesBootstraps = [];
+    public $addMataModules = false;
 
-	public function preInit(&$config) {
-		$this->addMataModules($config);
-		parent::preInit($config);
-	}
+    public function preInit(&$config)
+    {
+
+        if ($config["addMataModules"] == true) {
+            $this->addMataModules($config);
+        }
+
+        parent::preInit($config);
+    }
 
     /**
      * @inheritdoc
@@ -41,8 +44,8 @@ class Application extends \mata\web\Application {
     {
         $request = $this->getRequest();
 
-	    \Yii::setAlias('@webroot', dirname($request->getScriptFile())  . DIRECTORY_SEPARATOR . "web");
-	    \Yii::setAlias('@web', $request->getBaseUrl() . "/web");
+        \Yii::setAlias('@webroot', dirname($request->getScriptFile()) . DIRECTORY_SEPARATOR . "web");
+        \Yii::setAlias('@web', $request->getBaseUrl() . "/web");
 
         $file = Yii::getAlias('@vendor/yiisoft/extensions.php');
         $vendorExtensions = is_file($file) ? include($file) : [];
@@ -81,38 +84,43 @@ class Application extends \mata\web\Application {
                 $component = Yii::createObject($class);
             }
 
-            if ($component instanceof \yii\base\BootstrapInterface) {
+            if ($component instanceof BootstrapInterface) {
                 Yii::trace("Bootstrap with " . get_class($component) . '::bootstrap()', __METHOD__);
                 $component->bootstrap($this);
             } else {
                 Yii::trace("Bootstrap with " . get_class($component), __METHOD__);
             }
         }
+        
+        parent::bootstrap();
 
     }
 
 
-	private function addMataModules(&$config) {
+    private function addMataModules(&$config)
+    {
 
-		$db = $config["components"]["db"];
+        $db = $config["components"]["db"];
 
-		$db = new \yii\db\Connection([
-	      	'dsn' => $db["dsn"],
-	      	'username' => $db["username"],
-	      	'password' => $db["password"],
-  		]);
+        $db = new \yii\db\Connection([
+            'dsn' => $db["dsn"],
+            'username' => $db["username"],
+            'password' => $db["password"],
+        ]
+        );
 
-		$mataModules = $db->createCommand('SELECT * FROM matamodulemenu_module where Enabled = 1')->queryAll();
+        $mataModules = $db->createCommand('SELECT * FROM matamodulemenu_module where Enabled = 1')->queryAll();
 
-		$modulesDefinition = &$config["modules"];
+        $modulesDefinition = &$config["modules"];
 
-		foreach ($mataModules as $moduleRecord) {
-			$moduleClass = $moduleRecord["Location"] . "Module";
-			$module = new $moduleClass(null);
+        foreach ($mataModules as $moduleRecord) {
+            $moduleClass = $moduleRecord["Location"] . "Module";
+            $module = new $moduleClass(null);
 
-			if ($module != null)
-				$modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), isset($modulesDefinition[$moduleRecord["Id"]]) ? $modulesDefinition[$moduleRecord["Id"]] : array());
-		}
-	}
+            if ($module != null) {
+                $modulesDefinition[$moduleRecord["Id"]] = ArrayHelper::merge($module->getConfig(), json_decode($moduleRecord["Config"]), isset($modulesDefinition[$moduleRecord["Id"]]) ? $modulesDefinition[$moduleRecord["Id"]] : []);
+            }
+        }
+    }
 
 }
