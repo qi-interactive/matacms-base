@@ -17,11 +17,15 @@ use Yii;
 class Application extends \mata\web\Application {
 
     public $disabledModulesBootstraps = [];
-
-	public function preInit(&$config) {
-		$this->addMataModules($config);
-		parent::preInit($config);
-	}
+    public $addMataModules = false;
+	
+    public function preInit(&$config) {
+	    
+	if ($config["addMataModules"] == true) {
+            $this->addMataModules($config);
+        }
+	    parent::preInit($config);
+    }
 
     /**
      * @inheritdoc
