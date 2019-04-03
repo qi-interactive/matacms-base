@@ -15,7 +15,7 @@
         "mata/mata-category": "~1.0.0-alpha",
         "mata/mata-tag": "~1.0.0-alpha",
         "matacms/matacms-form": "~1.0.0-alpha",
-        "matacms/matacms-settings": "~1.0.0-alpha",
+        "matacms/matacms-settings": "~1.1.0-alpha",
         "matacms/matacms-cache": "~1.0.0-alpha",
         "matacms/matacms-simple-theme": "~1.0-alpha",
         "matacms/matacms-environment": "~1.0-alpha",
