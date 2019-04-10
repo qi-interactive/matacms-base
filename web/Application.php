@@ -17,7 +17,7 @@ use Yii;
 class Application extends \mata\web\Application {
 
     public $disabledModulesBootstraps = [];
-    public $addMataModules = false;
+    public $addMataModules = true;
 	
     public function preInit(&$config) {
 	    
