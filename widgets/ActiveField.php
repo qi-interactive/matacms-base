@@ -94,8 +94,13 @@ class ActiveField extends \yii\widgets\ActiveField {
         $clientOptions = isset($options["clientOptions"]) ? $options["clientOptions"] : [];
 
         $attribute = $this->attribute;
+    
+        if (\Yii::$app->user->isGuest) {
+            $currentLocalTime = date("Y-m-d H:i:s");
+        } else {
+            $currentLocalTime = \matacms\helpers\DateHelper::toLocalTime(date('Y-m-d H:i'), \Yii::$app->user->identity->getOffsetFromUTC());
+        }
 
-		$currentLocalTime = \matacms\helpers\DateHelper::toLocalTime(date('Y-m-d H:i'), \Yii::$app->user->identity->getOffsetFromUTC());
         $minDate = isset($options['minDate']) ? $options['minDate'] : ((!empty($this->model->$attribute) && $this->model->$attribute < $currentLocalTime) ? $this->model->$attribute : $currentLocalTime);
 
         $clientOptions = ArrayHelper::merge([

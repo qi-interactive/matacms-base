@@ -136,10 +136,18 @@ class ActiveRecord extends \mata\db\ActiveRecord implements HumanInterface {
 
     public function getVisualRepresentation() {
 
-        $media = Media::find()
-        ->where('`For` LIKE :query')
-        ->addParams([':query'=>str_replace("\\", "\\\\", $this->getDocumentId()) . '%'])
-        ->one();
+        $query = str_replace("\\", "\\\\", $this->getDocumentId()) . '%';
+        $media= \Yii::$app->cache->get(__CLASS__ . md5($query));
+
+        if($media===false)
+        {
+            $media = Media::find()
+                ->where('`For` LIKE :query')
+                ->addParams([':query'=> $query])
+                ->one();
+
+            \Yii::$app->cache->set(__CLASS__ . md5($query),$media, null, new \matacms\cache\caching\MataLastUpdatedTimestampDependency());
+        }
 
         if ($media)
             return $media->URI;
